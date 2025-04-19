@@ -1,56 +1,67 @@
-
 <!DOCTYPE html>
 <html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Radio12 Dance Station</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="logo.png" />
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #000;
-      color: #fff;
-    }
-    .logo {
-      width: 200px;
-      margin: 20px auto;
-    }
-    .player {
-      margin: 20px auto;
-    }
-    .socials a {
-      margin: 10px;
-      display: inline-block;
-      color: #fff;
-      text-decoration: none;
-      font-size: 18px;
-    }
-  </style>
-</head>
-<body>
-  <img src="logo.png" alt="Radio12 Dance Station" class="logo" />
-  <div class="player">
-    <audio controls autoplay>
-      <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg">
-      Il tuo browser non supporta l'elemento audio.
-    </audio>
-  </div>
-  <div class="socials">
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https://radio12webstation.wixsite.com/radio12webstation" target="_blank">Facebook</a>
-    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://radio12webstation.wixsite.com/radio12webstation" target="_blank">LinkedIn</a>
-    <a href="https://x.com/intent/tweet?url=https://radio12webstation.wixsite.com/radio12webstation" target="_blank">X</a>
-  </div>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
-        .then(reg => console.log('Service Worker registrato', reg))
-        .catch(err => console.warn('Errore Service Worker', err));
-    }
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="logo.png">
+    <title>Radio12 Dance Station</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: sans-serif;
+        color: white;
+        text-align: center;
+      }
+      img {
+        width: 200px;
+        margin-bottom: 20px;
+      }
+      .player-container {
+        width: 90%;
+        max-width: 400px;
+        margin-bottom: 20px;
+      }
+      audio {
+        width: 100%;
+        outline: none;
+      }
+      .social {
+        margin-top: 30px;
+      }
+      .social a {
+        margin: 0 10px;
+        color: white;
+        text-decoration: none;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="logo.png" alt="Radio12 Dance Station" />
+    <div class="player-container">
+      <audio controls autoplay>
+        <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg">
+        Il tuo browser non supporta l'elemento audio.
+      </audio>
+    </div>
+    <div class="social">
+      <p>Seguici su <a href="https://www.instagram.com/radio12dancestation/" target="_blank">Instagram</a></p>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://radio12webstation.wixsite.com/radio12webstation" target="_blank">📘</a>
+      <a href="https://x.com/intent/tweet?url=https://radio12webstation.wixsite.com/radio12webstation" target="_blank">𝕏</a>
+      <a href="https://api.whatsapp.com/send?text=https://radio12webstation.wixsite.com/radio12webstation" target="_blank">🟢</a>
+    </div>
+    <script>
+      if ('serviceWorker' in navigator && window.matchMedia('(display-mode: standalone)').matches) {
+        console.log('PWA installable');
+      }
+    </script>
+  </body>
 </html>

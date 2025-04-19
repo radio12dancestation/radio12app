@@ -1,8 +1,12 @@
-
 self.addEventListener('install', event => {
-  console.log('Service Worker installato');
+  event.waitUntil(
+    caches.open('radio12-cache').then(cache => {
+      return cache.addAll(['./index.html', './manifest.json', './logo.png']);
+    })
+  );
 });
-
-self.addEventListener('fetch', function(event) {
-  event.respondWith(fetch(event.request));
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response => response || fetch(event.request))
+  );
 });
