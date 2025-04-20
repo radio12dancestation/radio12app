@@ -37,17 +37,15 @@
     }
 
     .player-container {
-      width: 90%;
-      max-width: 400px;
+      width: 100%;
+      max-width: 575px;
       background: #111;
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 0 10px #444;
-    }
-
-    audio {
-      width: 100%;
-      outline: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .social {
@@ -68,52 +66,34 @@
   <p class="subtitle">La tua dose giornaliera di musica dance no copyright</p>
 
   <div class="player-container">
-    <audio id="radioPlayer" controls autoplay>
-      <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg">
-      Il tuo browser non supporta l'audio HTML5.
-    </audio>
-    <div id="streamWarning" style="display:none; margin-top:10px; color:#ffcc00; font-size:0.9rem; text-align:center;">
-      ⚠️ Se la radio non parte, prova a cambiare browser, usare il Wi-Fi o clicca direttamente su "Play".
-    </div>
+    <!-- Player Zeno FM -->
+    <iframe src="https://zeno.fm/player/radio12-dancestation" width="100%" height="250" frameborder="0" scrolling="no"></iframe>
+    <a href="https://zeno.fm/" target="_blank" style="color: #888; font-size: 0.75rem; margin-top: 5px;">A Zeno.FM Station</a>
   </div>
 
   <div class="social">
     Seguici su Instagram: <a href="https://www.instagram.com/radio12dancestation/" target="_blank">@radio12dancestation</a>
-
-    <!-- Pulsanti di Condivisione -->
-    <div style="text-align:center; margin-top:20px;">
-      <!-- Condivisione su Facebook -->
-      <a href="https://www.facebook.com/sharer/sharer.php?u=https://radio12webstation.wixsite.com/radio12webstation"
-         target="_blank"
-         style="margin:5px; padding:10px 15px; background-color:#3b5998; color:#fff; border-radius:5px; text-decoration:none; font-family:Arial, sans-serif;">
-        Condividi su Facebook
-      </a>
-
-      <!-- Condivisione su X -->
-      <a href="https://x.com/intent/tweet?url=https://radio12webstation.wixsite.com/radio12webstation&text=Scopri%20Radio12%20Dance%20Station!"
-         target="_blank"
-         style="margin:5px; padding:10px 15px; background-color:#000; color:#fff; border-radius:5px; text-decoration:none; font-family:Arial, sans-serif;">
-        Condividi su X
-      </a>
-
-      <!-- Condivisione su WhatsApp -->
-      <a href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20su%20https://radio12webstation.wixsite.com/radio12webstation"
-         target="_blank"
-         style="margin:5px; padding:10px 15px; background-color:#25D366; color:#fff; border-radius:5px; text-decoration:none; font-family:Arial, sans-serif;">
-        Condividi su WhatsApp
-      </a>
-    </div>
   </div>
 
-  <script>
-    const player = document.getElementById('radioPlayer');
-    const warning = document.getElementById('streamWarning');
+  <!-- Pulsanti di Condivisione -->
+  <div style="text-align:center; margin-top:20px;">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://radio12webstation.wixsite.com/radio12webstation"
+       target="_blank"
+       style="margin:5px; padding:10px 15px; background-color:#3b5998; color:#fff; border-radius:5px; text-decoration:none;">
+      Condividi su Facebook
+    </a>
 
-    setTimeout(() => {
-      if (player.paused) {
-        warning.style.display = 'block';
-      }
-    }, 5000);
-  </script>
+    <a href="https://x.com/intent/tweet?url=https://radio12webstation.wixsite.com/radio12webstation&text=Scopri%20Radio12%20Dance%20Station!"
+       target="_blank"
+       style="margin:5px; padding:10px 15px; background-color:#000; color:#fff; border-radius:5px; text-decoration:none;">
+      Condividi su X
+    </a>
+
+    <a href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20su%20https://radio12webstation.wixsite.com/radio12webstation"
+       target="_blank"
+       style="margin:5px; padding:10px 15px; background-color:#25D366; color:#fff; border-radius:5px; text-decoration:none;">
+      Condividi su WhatsApp
+    </a>
+  </div>
 </body>
 </html>
