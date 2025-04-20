@@ -84,7 +84,20 @@
       text-align: center;
     }
 
-    .social a {
+    .social button {
+      display: inline-block;
+      margin: 5px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      background-color: #fff;
+      color: #000;
+    }
+
+    .x {
       display: inline-block;
       margin: 5px;
       padding: 8px 12px;
@@ -92,11 +105,21 @@
       text-decoration: none;
       font-family: Arial, sans-serif;
       font-size: 0.9rem;
+      background-color: #000;
+      color: #fff;
     }
 
-    .facebook { background-color: #3b5998; color: #fff; }
-    .x        { background-color: #000;     color: #fff; }
-    .whatsapp { background-color: #25D366; color: #fff; }
+    .whatsapp {
+      display: inline-block;
+      margin: 5px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
+      background-color: #25D366;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -108,7 +131,7 @@
   <!-- Player con pulsante interattivo -->
   <div id="player">
     <h2>🎧 Ascolta Radio12</h2>
-    <p>Tocca &quot;Ascolta ora&quot; per iniziare lo streaming</p>
+    <p>Tocca "Ascolta ora" per iniziare lo streaming</p>
     <button id="playButton">▶️ Ascolta ora</button>
     <audio id="radioAudio" preload="none">
       <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg" />
@@ -116,21 +139,19 @@
     </audio>
   </div>
 
-  <!-- Social e condivisione -->
+  <!-- Sezione condivisione -->
   <div class="social">
-    Seguici su Instagram: <a href="https://www.instagram.com/radio12dancestation/" target="_blank">@radio12dancestation</a>
-    <br><br>
-    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://radio12dancestation.github.io/radio12app/" target="_blank">Facebook</a>
+    <button id="shareButton">🔗 Condividi</button>
     <a class="x" href="https://x.com/intent/tweet?url=https://radio12dancestation.github.io/radio12app/&text=Scopri%20Radio12%20Dance%20Station!" target="_blank">X</a>
-    <a class="whatsapp" href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20su%20https://radio12dancestation.github.io/radio12app/" target="_blank">WhatsApp</a>
+    <a class="whatsapp" href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20https://radio12dancestation.github.io/radio12app/" target="_blank">WhatsApp</a>
   </div>
 
-  <!-- Script per il pulsante play -->
+  <!-- Script per play e share -->
   <script>
+    // Gestione Play/Pausa
     const playButton = document.getElementById('playButton');
     const radioAudio = document.getElementById('radioAudio');
     let isPlaying = false;
-
     playButton.addEventListener('click', () => {
       if (isPlaying) {
         radioAudio.pause();
@@ -144,6 +165,24 @@
         });
       }
       isPlaying = !isPlaying;
+    });
+
+    // Gestione condivisione nativa
+    const shareButton = document.getElementById('shareButton');
+    shareButton.addEventListener('click', async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'Radio12 Dance Station',
+            text: 'Ascolta Radio12 Dance Station!',
+            url: 'https://radio12dancestation.github.io/radio12app/'
+          });
+        } catch (err) {
+          console.error('Errore condivisione:', err);
+        }
+      } else {
+        alert('Condivisione non supportata sul tuo dispositivo. Usa X o WhatsApp per condividere.');
+      }
     });
   </script>
 </body>
