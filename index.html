@@ -13,117 +13,29 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
   <style>
-    body {
-      margin: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    img.logo {
-      width: 200px;
-      margin-bottom: 15px;
-      object-fit: contain;
-    }
-
-    h1 {
-      font-size: 1.5rem;
-      margin: 0;
-    }
-
-    p.subtitle {
-      font-size: 1rem;
-      margin: 10px 0 20px;
-      color: #aaa;
-      text-align: center;
-    }
-
-    /* Player container */
-    #player {
-      width: 90%;
-      max-width: 400px;
-      background: #111;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #444;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    #player h2 {
-      margin: 0 0 10px;
-      font-size: 1.25rem;
-    }
-
-    #player p {
-      margin: 0 0 15px;
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
-
-    #playButton {
-      padding: 10px 20px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      background-color: #1db954;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    .social {
-      margin-top: auto;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    .social button {
-      display: inline-block;
-      margin: 5px;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-family: Arial, sans-serif;
-      font-size: 0.9rem;
-      border: none;
-      cursor: pointer;
-      background-color: #fff;
-      color: #000;
-    }
-
-    .x {
-      display: inline-block;
-      margin: 5px;
-      padding: 8px 12px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-family: Arial, sans-serif;
-      font-size: 0.9rem;
-      background-color: #000;
-      color: #fff;
-    }
-
-    .whatsapp {
-      display: inline-block;
-      margin: 5px;
-      padding: 8px 12px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-family: Arial, sans-serif;
-      font-size: 0.9rem;
-      background-color: #25D366;
-      color: #fff;
-    }
+    body { margin: 0; background-color: #000; color: #fff; font-family: Arial, sans-serif;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      min-height: 100vh; padding: 20px; box-sizing: border-box; }
+    img.logo { width: 200px; margin-bottom: 15px; object-fit: contain; }
+    h1 { font-size: 1.5rem; margin: 0; }
+    p.subtitle { font-size: 1rem; margin: 10px 0 20px; color: #aaa; text-align: center; }
+    #player { width: 90%; max-width: 400px; background: #111; padding: 20px;
+      border-radius: 12px; box-shadow: 0 0 10px #444; text-align: center; margin-bottom: 30px; }
+    #player h2 { margin: 0 0 10px; font-size: 1.25rem; }
+    #player p { margin: 0 0 15px; font-size: 0.9rem; opacity: 0.8; }
+    #playButton { padding: 10px 20px; font-size: 1rem; border: none;
+      border-radius: 8px; background-color: #1db954; color: #fff; cursor: pointer; }
+    .social { margin-top: auto; font-size: 0.9rem; text-align: center; }
+    .social a, .social button { display: inline-block; margin: 5px;
+      padding: 8px 12px; border-radius: 6px; font-family: Arial, sans-serif;
+      font-size: 0.9rem; text-decoration: none; border: none; cursor: pointer; }
+    .x        { background-color: #000;     color: #fff; }
+    .whatsapp { background-color: #25D366; color: #fff; }
+    .error-msg { color: #f55; margin-top: 10px; font-size: 0.9rem; }
   </style>
 </head>
 <body>
-  <!-- Logo -->
+  <!-- Logo e titolo -->
   <img class="logo" src="logo.png" alt="Radio12 Dance Station Logo" />
   <h1>Radio12 Dance Station</h1>
   <p class="subtitle">La tua dose giornaliera di musica dance no copyright</p>
@@ -133,41 +45,50 @@
     <h2>🎧 Ascolta Radio12</h2>
     <p>Tocca "Ascolta ora" per iniziare lo streaming</p>
     <button id="playButton">▶️ Ascolta ora</button>
-    <audio id="radioAudio" preload="none">
+    <audio id="radioAudio" preload="none" controls crossorigin="anonymous">
       <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg" />
       Il tuo browser non supporta l'audio.
     </audio>
+    <div id="errorMessage" class="error-msg" style="display:none;">
+      Errore durante lo streaming. Verifica la connessione o prova un altro browser.
+    </div>
   </div>
 
   <!-- Sezione condivisione -->
   <div class="social">
     <button id="shareButton">🔗 Condividi</button>
+    <button id="facebookButton">Facebook</button>
     <a class="x" href="https://x.com/intent/tweet?url=https://radio12dancestation.github.io/radio12app/&text=Scopri%20Radio12%20Dance%20Station!" target="_blank">X</a>
     <a class="whatsapp" href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20https://radio12dancestation.github.io/radio12app/" target="_blank">WhatsApp</a>
   </div>
 
   <!-- Script per play e share -->
   <script>
-    // Gestione Play/Pausa
+    // Play/Pausa
     const playButton = document.getElementById('playButton');
     const radioAudio = document.getElementById('radioAudio');
+    const errorMessage = document.getElementById('errorMessage');
     let isPlaying = false;
     playButton.addEventListener('click', () => {
+      errorMessage.style.display = 'none';
       if (isPlaying) {
         radioAudio.pause();
         playButton.textContent = '▶️ Ascolta ora';
       } else {
         radioAudio.play().then(() => {
           playButton.textContent = '⏸ Pausa';
-        }).catch((err) => {
+        }).catch(err => {
           console.error('Errore nella riproduzione:', err);
-          alert('Errore nella riproduzione. Riprova.');
+          errorMessage.style.display = 'block';
         });
       }
       isPlaying = !isPlaying;
     });
+    radioAudio.addEventListener('error', () => {
+      errorMessage.style.display = 'block';
+    });
 
-    // Gestione condivisione nativa
+    // Condivisione nativa
     const shareButton = document.getElementById('shareButton');
     shareButton.addEventListener('click', async () => {
       if (navigator.share) {
@@ -177,12 +98,19 @@
             text: 'Ascolta Radio12 Dance Station!',
             url: 'https://radio12dancestation.github.io/radio12app/'
           });
-        } catch (err) {
-          console.error('Errore condivisione:', err);
-        }
+        } catch (e) { console.error(e); }
       } else {
-        alert('Condivisione non supportata sul tuo dispositivo. Usa X o WhatsApp per condividere.');
+        alert('Condivisione non supportata. Usa i link sottostanti.');
       }
+    });
+
+    // Intent Android per Facebook con fallback
+    const facebookButton = document.getElementById('facebookButton');
+    facebookButton.addEventListener('click', () => {
+      const appLink = 'fb://facewebmodal/f?href=https://radio12dancestation.github.io/radio12app/';
+      const webLink = 'https://www.facebook.com/sharer/sharer.php?u=https://radio12dancestation.github.io/radio12app/';
+      window.location = appLink;
+      setTimeout(() => { window.location = webLink; }, 2000);
     });
   </script>
 </body>
