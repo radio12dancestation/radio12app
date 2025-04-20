@@ -38,26 +38,38 @@
 
     .player-container {
       width: 100%;
-      max-width: 575px;
+      max-width: 400px;
       background: #111;
-      padding: 20px;
+      padding: 10px;
       border-radius: 12px;
       box-shadow: 0 0 10px #444;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    }
+
+    iframe {
+      width: 100%;
+      height: 130px; /* Altezza ridotta */
+      border: none;
     }
 
     .social {
-      margin-top: 30px;
+      margin-top: 25px;
       font-size: 0.9rem;
       text-align: center;
     }
 
-    .social a {
-      color: #1db954;
+    .social-buttons a {
+      display: inline-block;
+      margin: 5px;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      border-radius: 6px;
       text-decoration: none;
+      color: #fff;
     }
+
+    .facebook { background-color: #3b5998; }
+    .x { background-color: #000; }
+    .whatsapp { background-color: #25D366; }
   </style>
 </head>
 <body>
@@ -66,34 +78,17 @@
   <p class="subtitle">La tua dose giornaliera di musica dance no copyright</p>
 
   <div class="player-container">
-    <!-- Player Zeno FM -->
-    <iframe src="https://zeno.fm/player/radio12-dancestation" width="100%" height="250" frameborder="0" scrolling="no"></iframe>
-    <a href="https://zeno.fm/" target="_blank" style="color: #888; font-size: 0.75rem; margin-top: 5px;">A Zeno.FM Station</a>
+    <iframe src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
   </div>
 
   <div class="social">
-    Seguici su Instagram: <a href="https://www.instagram.com/radio12dancestation/" target="_blank">@radio12dancestation</a>
-  </div>
-
-  <!-- Pulsanti di Condivisione -->
-  <div style="text-align:center; margin-top:20px;">
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https://radio12webstation.wixsite.com/radio12webstation"
-       target="_blank"
-       style="margin:5px; padding:10px 15px; background-color:#3b5998; color:#fff; border-radius:5px; text-decoration:none;">
-      Condividi su Facebook
-    </a>
-
-    <a href="https://x.com/intent/tweet?url=https://radio12webstation.wixsite.com/radio12webstation&text=Scopri%20Radio12%20Dance%20Station!"
-       target="_blank"
-       style="margin:5px; padding:10px 15px; background-color:#000; color:#fff; border-radius:5px; text-decoration:none;">
-      Condividi su X
-    </a>
-
-    <a href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20su%20https://radio12webstation.wixsite.com/radio12webstation"
-       target="_blank"
-       style="margin:5px; padding:10px 15px; background-color:#25D366; color:#fff; border-radius:5px; text-decoration:none;">
-      Condividi su WhatsApp
-    </a>
+    Seguici su Instagram:<br>
+    <a href="https://www.instagram.com/radio12dancestation/" target="_blank">@radio12dancestation</a>
+    <div class="social-buttons">
+      <a class="facebook" href="fb://facewebmodal/f?href=https://www.facebook.com/sharer/sharer.php?u=https://radio12webstation.wixsite.com/radio12webstation" target="_blank">Facebook</a>
+      <a class="x" href="https://x.com/intent/tweet?url=https://radio12webstation.wixsite.com/radio12webstation&text=Scopri%20Radio12%20Dance%20Station!" target="_blank">X</a>
+      <a class="whatsapp" href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20su%20https://radio12webstation.wixsite.com/radio12webstation" target="_blank">WhatsApp</a>
+    </div>
   </div>
 </body>
 </html>
