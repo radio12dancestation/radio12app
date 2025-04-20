@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="logo.png" />
+    <title>Radio12 Dance Station</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: #000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: sans-serif;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      img.logo {
+        width: 200px;
+        margin-bottom: 20px;
+      }
+      .player-container {
+        width: 90%;
+        max-width: 400px;
+        margin-bottom: 20px;
+      }
+      audio {
+        width: 100%;
+        outline: none;
+      }
+      .social {
+        margin-top: 20px;
+      }
+      .social a {
+        margin: 0 10px;
+        color: #fff;
+        text-decoration: none;
+        font-size: 24px;
+      }
+      #installBanner {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #1db954;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        z-index: 1000;
+      }
+    </style>
+  </head>
+  <body>
+    <img class="logo" src="logo.png" alt="Logo Radio12 Dance Station" />
+
+    <div class="player-container">
+      <audio controls>
+        <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg" />
+        Il tuo browser non supporta l'elemento audio.
+      </audio>
+    </div>
+
+    <div class="social">
+      <p>Seguici su <a href="https://www.instagram.com/radio12dancestation/" target="_blank">Instagram</a></p>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://radio12webstation.wixsite.com/radio12webstation" target="_blank">📘</a>
+      <a href="https://x.com/intent/tweet?url=https://radio12webstation.wixsite.com/radio12webstation" target="_blank">𝕏</a>
+      <a href="https://api.whatsapp.com/send?text=https://radio12webstation.wixsite.com/radio12webstation" target="_blank">🟢</a>
+    </div>
+
+    <div id="installBanner">📲 Aggiungi alla Home</div>
+
+    <script>
+      let deferredPrompt;
+      const installBanner = document.getElementById('installBanner');
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBanner.style.display = 'block';
+      });
+
+      installBanner.addEventListener('click', async () => {
+        installBanner.style.display = 'none';
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          await deferredPrompt.userChoice;
+          deferredPrompt = null;
+        }
+      });
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+      }
+    </script>
+  </body>
+</html>
