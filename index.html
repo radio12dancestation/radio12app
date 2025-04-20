@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#000000" />
-    <link rel="manifest" href="manifest.json" />
-    <link rel="apple-touch-icon" href="logo.png" />
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="logo.png">
     <title>Radio12 Dance Station</title>
     <style>
       body {
@@ -25,6 +25,7 @@
       img.logo {
         width: 200px;
         margin-bottom: 20px;
+        object-fit: contain; /* Per evitare distorsioni del logo */
       }
       .player-container {
         width: 90%;
@@ -61,15 +62,18 @@
     </style>
   </head>
   <body>
-    <img class="logo" src="logo.png" alt="Logo Radio12" />
+    <!-- Logo con path relativo -->
+    <img class="logo" src="logo.png" alt="Radio12 Dance Station Logo" />
 
+    <!-- Player audio -->
     <div class="player-container">
       <audio controls>
-        <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg" />
+        <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg">
         Il tuo browser non supporta l'elemento audio.
       </audio>
     </div>
 
+    <!-- Social links -->
     <div class="social">
       <p>Seguici su <a href="https://www.instagram.com/radio12dancestation/" target="_blank">Instagram</a></p>
       <a href="https://www.facebook.com/sharer/sharer.php?u=https://radio12webstation.wixsite.com/radio12webstation" target="_blank">📘</a>
@@ -77,9 +81,11 @@
       <a href="https://api.whatsapp.com/send?text=https://radio12webstation.wixsite.com/radio12webstation" target="_blank">🟢</a>
     </div>
 
+    <!-- Banner per installazione PWA -->
     <div id="installBanner">Aggiungi alla Home</div>
 
     <script>
+      // Listener per evento beforeinstallprompt
       let deferredPrompt;
       const installBanner = document.getElementById('installBanner');
 
@@ -94,10 +100,12 @@
         if (deferredPrompt) {
           deferredPrompt.prompt();
           const { outcome } = await deferredPrompt.userChoice;
+          console.log('User response to the install prompt:', outcome);
           deferredPrompt = null;
         }
       });
 
+      // registra service worker
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js');
       }
