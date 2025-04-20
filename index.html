@@ -39,7 +39,117 @@
     .player-container {
       width: 100%;
       max-width: 400px;
+      background: #111;<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Radio12 Dance Station</title>
+
+  <!-- PWA Essentials -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="apple-touch-icon" sizes="180x180" href="logo.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log('Service Worker registrato'))
+        .catch((e) => console.error('SW registration failed:', e));
+    }
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    img { width: 200px; margin-bottom: 15px; }
+    h1 { font-size: 1.5rem; margin: 0; }
+    p.subtitle {
+      font-size: 1rem;
+      margin: 10px 0 30px;
+      color: #aaa;
+      text-align: center;
+    }
+    .player-container {
+      width: 100%;
+      max-width: 400px;
       background: #111;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #444;
+    }
+    iframe {
+      width: 100%;
+      height: 90px;
+      border: none;
+    }
+    .social {
+      margin-top: 25px;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    .social-buttons a, .social-buttons button {
+      display: inline-block;
+      margin: 5px;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    .facebook { background-color: #3b5998; }
+    .x { background-color: #000; }
+    .whatsapp { background-color: #25D366; }
+  </style>
+</head>
+<body>
+  <img src="https://i.postimg.cc/Bnn3vrGg/0.png" alt="Radio12 Dance Station Logo" />
+  <h1>Radio12 Dance Station</h1>
+  <p class="subtitle">La tua dose giornaliera di musica dance no copyright</p>
+
+  <div class="player-container">
+    <!-- Player Zeno FM -->
+    <iframe src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
+  </div>
+
+  <div class="social">
+    Seguici su Instagram:<br>
+    <a href="https://www.instagram.com/radio12dancestation/" target="_blank">@radio12dancestation</a>
+    <div class="social-buttons">
+      <button id="facebookButton" class="facebook">Facebook</button>
+      <a class="x" href="https://x.com/intent/tweet?url=https://radio12dancestation.github.io/radio12app/&text=Scopri%20Radio12%20Dance%20Station!" target="_blank">X</a>
+      <a class="whatsapp" href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20https://radio12dancestation.github.io/radio12app/" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+
+  <script>
+    // Facebook Intent
+    document.getElementById('facebookButton').addEventListener('click', () => {
+      const appLink = 'fb://facewebmodal/f?href=https://radio12dancestation.github.io/radio12app/';
+      const webLink = 'https://www.facebook.com/sharer/sharer.php?u=https://radio12dancestation.github.io/radio12app/';
+      window.location = appLink;
+      setTimeout(() => { window.location = webLink; }, 1500);
+    });
+  </script>
+</body>
+</html>
+
       padding: 10px;
       border-radius: 12px;
       box-shadow: 0 0 10px #444;
