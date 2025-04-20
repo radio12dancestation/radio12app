@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Radio12 Dance Station</title>
 
-  <!-- Icona per dispositivi Apple -->
-  <link rel="apple-touch-icon" href="logo.png" />
+  <!-- PWA e iOS -->
   <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" sizes="180x180" href="logo.png" />
   <meta name="theme-color" content="#000000" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
   <style>
     body {
       margin: 0;
@@ -22,14 +22,15 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      height: 100vh;
+      min-height: 100vh;
       padding: 20px;
       box-sizing: border-box;
     }
 
-    img {
+    img.logo {
       width: 200px;
       margin-bottom: 15px;
+      object-fit: contain;
     }
 
     h1 {
@@ -39,27 +40,46 @@
 
     p.subtitle {
       font-size: 1rem;
-      margin: 10px 0 30px;
+      margin: 10px 0 20px;
       color: #aaa;
       text-align: center;
     }
 
-    .player-container {
+    /* Player container */
+    #player {
       width: 90%;
       max-width: 400px;
       background: #111;
       padding: 20px;
       border-radius: 12px;
       box-shadow: 0 0 10px #444;
+      text-align: center;
+      margin-bottom: 30px;
     }
 
-    audio {
-      width: 100%;
-      outline: none;
+    #player h2 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+    }
+
+    #player p {
+      margin: 0 0 15px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    #playButton {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #1db954;
+      color: #fff;
+      cursor: pointer;
     }
 
     .social {
-      margin-top: 30px;
+      margin-top: auto;
       font-size: 0.9rem;
       text-align: center;
     }
@@ -69,36 +89,62 @@
       margin: 5px;
       padding: 8px 12px;
       border-radius: 6px;
-      font-family: Arial, sans-serif;
       text-decoration: none;
+      font-family: Arial, sans-serif;
       font-size: 0.9rem;
     }
 
     .facebook { background-color: #3b5998; color: #fff; }
-    .x { background-color: #000; color: #fff; }
+    .x        { background-color: #000;     color: #fff; }
     .whatsapp { background-color: #25D366; color: #fff; }
-
   </style>
 </head>
 <body>
-  <img src="logo.png" alt="Radio12 Dance Station Logo" />
+  <!-- Logo -->
+  <img class="logo" src="logo.png" alt="Radio12 Dance Station Logo" />
   <h1>Radio12 Dance Station</h1>
   <p class="subtitle">La tua dose giornaliera di musica dance no copyright</p>
 
-  <div class="player-container">
-    <audio controls autoplay>
-      <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg">
-      Il tuo browser non supporta l'elemento audio.
+  <!-- Player con pulsante interattivo -->
+  <div id="player">
+    <h2>🎧 Ascolta Radio12</h2>
+    <p>Tocca &quot;Ascolta ora&quot; per iniziare lo streaming</p>
+    <button id="playButton">▶️ Ascolta ora</button>
+    <audio id="radioAudio" preload="none">
+      <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg" />
+      Il tuo browser non supporta l'audio.
     </audio>
   </div>
 
+  <!-- Social e condivisione -->
   <div class="social">
-    Seguici su Instagram:<br>
-    <a href="https://www.instagram.com/radio12dancestation/" target="_blank">@radio12dancestation</a>
+    Seguici su Instagram: <a href="https://www.instagram.com/radio12dancestation/" target="_blank">@radio12dancestation</a>
     <br><br>
-    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://radio12webstation.wixsite.com/radio12webstation" target="_blank">Facebook</a>
-    <a class="x" href="https://x.com/intent/tweet?url=https://radio12webstation.wixsite.com/radio12webstation&text=Scopri%20Radio12%20Dance%20Station!" target="_blank">X</a>
-    <a class="whatsapp" href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20su%20https://radio12webstation.wixsite.com/radio12webstation" target="_blank">WhatsApp</a>
+    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://radio12dancestation.github.io/radio12app/" target="_blank">Facebook</a>
+    <a class="x" href="https://x.com/intent/tweet?url=https://radio12dancestation.github.io/radio12app/&text=Scopri%20Radio12%20Dance%20Station!" target="_blank">X</a>
+    <a class="whatsapp" href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20su%20https://radio12dancestation.github.io/radio12app/" target="_blank">WhatsApp</a>
   </div>
+
+  <!-- Script per il pulsante play -->
+  <script>
+    const playButton = document.getElementById('playButton');
+    const radioAudio = document.getElementById('radioAudio');
+    let isPlaying = false;
+
+    playButton.addEventListener('click', () => {
+      if (isPlaying) {
+        radioAudio.pause();
+        playButton.textContent = '▶️ Ascolta ora';
+      } else {
+        radioAudio.play().then(() => {
+          playButton.textContent = '⏸ Pausa';
+        }).catch((err) => {
+          console.error('Errore nella riproduzione:', err);
+          alert('Errore nella riproduzione. Riprova.');
+        });
+      }
+      isPlaying = !isPlaying;
+    });
+  </script>
 </body>
 </html>
