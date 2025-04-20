@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="it">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#000000">
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="logo.png">
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="logo.png" />
     <title>Radio12 Dance Station</title>
     <style>
       body {
@@ -62,11 +61,11 @@
     </style>
   </head>
   <body>
-    <img class="logo" src="logo.png" alt="Radio12 Dance Station Logo" />
+    <img class="logo" src="logo.png" alt="Logo Radio12" />
 
     <div class="player-container">
       <audio controls>
-        <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg">
+        <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg" />
         Il tuo browser non supporta l'elemento audio.
       </audio>
     </div>
@@ -95,7 +94,6 @@
         if (deferredPrompt) {
           deferredPrompt.prompt();
           const { outcome } = await deferredPrompt.userChoice;
-          console.log('User response to the install prompt:', outcome);
           deferredPrompt = null;
         }
       });
