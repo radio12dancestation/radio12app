@@ -1,76 +1,40 @@
+<!-- Inizio del codice completo già aggiornato -->
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Radio12 Dance Station</title>
-
-  <!-- PWA Essentials -->
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#000000" />
   <link rel="apple-touch-icon" sizes="180x180" href="logo.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-  <!-- Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
-        .then(() => console.log('Service Worker registrato'))
-        .catch((e) => console.error('SW registration failed:', e));
-    }
-  </script>
-
   <style>
     body {
-      margin: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      height: 100vh;
-      padding: 20px;
-      box-sizing: border-box;
+      margin: 0; background-color: #000; color: #fff;
+      font-family: Arial, sans-serif; display: flex;
+      flex-direction: column; align-items: center;
+      justify-content: flex-start; height: 100vh;
+      padding: 20px; box-sizing: border-box;
     }
     img { width: 200px; margin-bottom: 15px; }
     h1 { font-size: 1.5rem; margin: 0; }
-    p.subtitle {
-      font-size: 1rem;
-      margin: 10px 0 30px;
-      color: #aaa;
-      text-align: center;
-    }
+    p.subtitle { font-size: 1rem; margin: 10px 0 30px; color: #aaa; text-align: center; }
     .player-container {
-      width: 100%;
-      max-width: 400px;
-      background: #111;
-      padding: 10px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #444;
+      width: 100%; max-width: 400px; background: #111;
+      padding: 10px; border-radius: 12px; box-shadow: 0 0 10px #444;
+      margin-bottom: 20px;
     }
-    iframe {
-      width: 100%;
-      height: 100px;
-      border: none;
-    }
+    iframe { width: 100%; height: 100px; border: none; }
+    audio { width: 100%; margin-top: 10px; }
     .social {
-      margin-top: 25px;
-      font-size: 0.9rem;
-      text-align: center;
+      margin-top: 25px; font-size: 0.9rem; text-align: center;
     }
     .social-buttons a, .social-buttons button {
-      display: inline-block;
-      margin: 5px;
-      padding: 8px 12px;
-      font-size: 0.85rem;
-      border-radius: 6px;
-      text-decoration: none;
-      color: #fff;
-      border: none;
-      cursor: pointer;
+      display: inline-block; margin: 5px; padding: 8px 12px;
+      font-size: 0.85rem; border-radius: 6px;
+      text-decoration: none; color: #fff; border: none; cursor: pointer;
     }
     .facebook { background-color: #3b5998; }
     .x { background-color: #000; }
@@ -79,11 +43,23 @@
 </head>
 <body>
   <img src="https://i.postimg.cc/Bnn3vrGg/0.png" alt="Radio12 Dance Station Logo" />
-  <h1>Radio12 Dance Station</h1>
-  <p class="subtitle">La tua dose giornaliera di musica dance no copyright</p>
+  <h1>Radio12</h1>
+  <p class="subtitle">Due anime, un'unica passione: la musica dance no copyright</p>
 
   <div class="player-container">
-    <!-- Player Zeno FM -->
+    <h2 style="font-size: 1.2rem; margin-bottom: 10px;">🎧 Radio12 Dancestation (Listen2MyRadio)</h2>
+    <iframe 
+      src="https://cp.listen2myradio.com/player/index.php?username=radio12dancestation" 
+      allow="autoplay" allowtransparency="true" scrolling="no">
+    </iframe>
+    <audio controls>
+      <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg">
+      Il tuo browser non supporta l'elemento audio.
+    </audio>
+  </div>
+
+  <div class="player-container">
+    <h2 style="font-size: 1.2rem; margin-bottom: 10px;">🔥 Radio12 Dancefloor (Zeno FM)</h2>
     <iframe src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
   </div>
 
@@ -98,7 +74,6 @@
   </div>
 
   <script>
-    // Facebook Intent
     document.getElementById('facebookButton').addEventListener('click', () => {
       const appLink = 'fb://facewebmodal/f?href=https://radio12dancestation.github.io/radio12app/';
       const webLink = 'https://www.facebook.com/sharer/sharer.php?u=https://radio12dancestation.github.io/radio12app/';
