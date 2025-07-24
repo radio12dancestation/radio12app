@@ -7,7 +7,7 @@
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#000000" />
   <link rel="apple-touch-icon" sizes="180x180" href="logo.png" />
-  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <style>
     body {
@@ -48,11 +48,11 @@
   <div class="player-container">
     <h2 style="font-size: 1.2rem; margin-bottom: 10px;">🎧 Radio12 Dancestation </h2>
     <iframe 
-      src="https://server-listen-per-app-r12.radio12webstati.repl.co/stream" 
+      src="https://server-listen-per-app-r12.radio12webstati.repl.co/"
       allow="autoplay" allowtransparency="true" scrolling="no">
     </iframe>
     <audio controls>
-      <source src="https://server-listen-per-app-r12.radio12webstati.repl.co/stream" type="audio/mpeg">
+      <source src="https://52afc3e6-4a46-4cf9-aae9-816d0f852c32-00-gv0rx9lfn0qj.worf.replit.dev/stream" type="audio/mpeg">
       Il tuo browser non supporta l'elemento audio.
     </audio>
   </div>
@@ -67,8 +67,21 @@
     <a href="https://www.instagram.com/radio12dancestation/" target="_blank">@radio12dancestation</a>
     <div class="social-buttons">
       <button id="facebookButton" class="facebook">Facebook</button>
-      <a class="x" href="https://x.com/intent/tweet?url=https://ra
+      <a class="x" href="https://x.com/intent/tweet?url=https://radio12dancestation.github.io/radio12app/&text=Scopri%20Radio12%20Dance%20Station!" target="_blank">X</a>
+      <a class="whatsapp" href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20https://radio12dancestation.github.io/radio12app/" target="_blank">WhatsApp</a>
+    </div>
+  </div>
 
+  <script>
+    document.getElementById('facebookButton').addEventListener('click', () => {
+      const appLink = 'fb://facewebmodal/f?href=https://radio12dancestation.github.io/radio12app/';
+      const webLink = 'https://www.facebook.com/sharer/sharer.php?u=https://radio12dancestation.github.io/radio12app/';
+      window.location = appLink;
+      setTimeout(() => { window.location = webLink; }, 1500);
+    });
+  </script>
+</body>
 </html>
+
 
 
