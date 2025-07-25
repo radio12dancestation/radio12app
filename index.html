@@ -8,62 +8,75 @@
   <meta name="theme-color" content="#e81e4d">
   <style>
     body {
-      margin: 0; 
-      background-color: #000; 
+      margin: 0;
+      background-color: #000;
       color: #fff;
-      font-family: Arial, sans-serif; 
+      font-family: Arial, sans-serif;
       display: flex;
-      flex-direction: column; 
+      flex-direction: column;
       align-items: center;
-      justify-content: flex-start; 
+      justify-content: flex-start;
       min-height: 100vh;
-      padding: 20px; 
+      padding: 20px;
       box-sizing: border-box;
     }
     img {
-      width: 200px; 
+      width: 200px;
       margin-bottom: 15px;
     }
     h1 {
-      font-size: 1.8rem; 
+      font-size: 1.8rem;
       margin: 0 0 10px;
     }
     p.subtitle {
-      font-size: 1rem; 
-      margin: 0 0 30px; 
-      color: #aaa; 
+      font-size: 1rem;
+      margin: 0 0 20px;
+      color: #aaa;
       text-align: center;
     }
+    .buttons {
+      margin-bottom: 15px;
+    }
+    .buttons button {
+      margin: 5px;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 6px;
+      background-color: #e81e4d;
+      color: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
     .player-container {
-      width: 100%; 
-      max-width: 400px; 
+      width: 100%;
+      max-width: 400px;
       background: #111;
-      padding: 15px; 
-      border-radius: 12px; 
+      padding: 15px;
+      border-radius: 12px;
       box-shadow: 0 0 10px #444;
       margin-bottom: 25px;
       text-align: center;
     }
     iframe {
-      width: 100%; 
-      height: 100px; 
+      width: 100%;
+      height: 100px;
       border: none;
       border-radius: 10px;
     }
     .social {
-      margin-top: 30px; 
-      font-size: 0.9rem; 
+      margin-top: 30px;
+      font-size: 0.9rem;
       text-align: center;
     }
     .social-buttons a, .social-buttons button {
-      display: inline-block; 
-      margin: 5px; 
+      display: inline-block;
+      margin: 5px;
       padding: 8px 12px;
-      font-size: 0.85rem; 
+      font-size: 0.85rem;
       border-radius: 6px;
-      text-decoration: none; 
-      color: #fff; 
-      border: none; 
+      text-decoration: none;
+      color: #fff;
+      border: none;
       cursor: pointer;
     }
     .facebook { background-color: #3b5998; }
@@ -78,6 +91,8 @@
       border-radius: 6px;
       cursor: pointer;
     }
+    .player { display: none; }
+    .player.active { display: block; }
   </style>
 </head>
 <body>
@@ -85,7 +100,12 @@
   <h1>Radio12</h1>
   <p class="subtitle">Due anime, un'unica passione: la musica dance</p>
 
-  <div class="player-container">
+  <div class="buttons">
+    <button onclick="switchPlayer('caster')">🎧 Dancestation</button>
+    <button onclick="switchPlayer('zeno')">🔥 Dancefloor</button>
+  </div>
+
+  <div id="caster" class="player player-container active">
     <h2>🎧 Radio12 Dancestation</h2>
     <div data-type="newStreamPlayer"
          data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
@@ -94,13 +114,13 @@
          data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
          data-rendered="false"
          class="cstrEmbed">
-      <a href="https://www.caster.fm">Shoutcast Hosting</a> 
-      <a href="https://www.caster.fm">Stream Hosting</a> 
+      <a href="https://www.caster.fm">Shoutcast Hosting</a>
+      <a href="https://www.caster.fm">Stream Hosting</a>
       <a href="https://www.caster.fm">Radio Server Hosting</a>
     </div>
   </div>
 
-  <div class="player-container">
+  <div id="zeno" class="player player-container">
     <h2>🔥 Radio12 Dancefloor</h2>
     <iframe src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
   </div>
@@ -110,8 +130,8 @@
     <a href="https://www.instagram.com/radio12dancestation/" target="_blank" rel="noopener noreferrer">@radio12dancestation</a>
     <div class="social-buttons">
       <button id="facebookButton" class="facebook">Facebook</button>
-      <a class="x" href="https://x.com/intent/tweet?url=https://radio12dancestation.github.io/radio12app/&text=Scopri%20Radio12%20Dance%20Station!" target="_blank" rel="noopener noreferrer">X</a>
-      <a class="whatsapp" href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20https://radio12dancestation.github.io/radio12app/" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      <a class="x" href="https://x.com/intent/tweet?url=https://radio12dancestation.github.io/radio12app/&text=Scopri%20Radio12%20Dance%20Station!" target="_blank">X</a>
+      <a class="whatsapp" href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20https://radio12dancestation.github.io/radio12app/" target="_blank">WhatsApp</a>
       <button id="installButton">📲 Aggiungi alla Home</button>
     </div>
   </div>
@@ -119,6 +139,11 @@
   <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
 
   <script>
+    function switchPlayer(id) {
+      document.querySelectorAll('.player').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
     document.getElementById('facebookButton').addEventListener('click', () => {
       const appLink = 'fb://facewebmodal/f?href=https://radio12dancestation.github.io/radio12app/';
       const webLink = 'https://www.facebook.com/sharer/sharer.php?u=https://radio12dancestation.github.io/radio12app/';
@@ -126,7 +151,6 @@
       setTimeout(() => { window.location = webLink; }, 1500);
     });
 
-    // Installazione PWA
     let deferredPrompt;
     const installBtn = document.getElementById('installButton');
     installBtn.style.display = 'none';
@@ -141,12 +165,10 @@
       installBtn.style.display = 'none';
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then((choiceResult) => {
-        console.log(choiceResult.outcome === 'accepted' ? 'Installazione accettata' : 'Installazione rifiutata');
         deferredPrompt = null;
       });
     });
 
-    // Service Worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
         .then(() => console.log('Service Worker registrato'))
@@ -156,6 +178,5 @@
 </body>
 </html>
 
-</html>
 
 
