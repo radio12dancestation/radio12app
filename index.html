@@ -139,71 +139,41 @@
   <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
 
   <script>
-  function switchPlayer(id) {
-    // Nasconde tutti i player
-    document.querySelectorAll('.player').forEach(p => p.classList.remove('active'));
-
-    // Stoppa il player di Caster
-    if (id === 'zeno') {
-      const casterWidget = document.querySelector('.cstrEmbed');
-      if (casterWidget && casterWidget.dataset.rendered === 'true') {
-        casterWidget.innerHTML = ''; // rimuove il player
-        casterWidget.dataset.rendered = 'false'; // forza il re-render
-        setTimeout(() => {
-          casterWidget.innerHTML = `
-            <a href="https://www.caster.fm">Shoutcast Hosting</a>
-            <a href="https://www.caster.fm">Stream Hosting</a>
-            <a href="https://www.caster.fm">Radio Server Hosting</a>
-          `;
-          window.cstrEmbed && window.cstrEmbed.render && window.cstrEmbed.render();
-        }, 300);
-      }
+    function switchPlayer(id) {
+      document.querySelectorAll('.player').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
     }
 
-    // Stoppa il player Zeno
-    if (id === 'caster') {
-      const zenoIframe = document.querySelector('#zeno iframe');
-      if (zenoIframe) {
-        zenoIframe.src = '';
-        setTimeout(() => {
-          zenoIframe.src = 'https://zeno.fm/player/radio12-dancestation';
-        }, 300);
-      }
-    }
-
-    // Mostra il player selezionato
-    document.getElementById(id).classList.add('active');
-  }
-
-  // Codice social + install
-  document.getElementById('facebookButton').addEventListener('click', () => {
-    const appLink = 'fb://facewebmodal/f?href=https://radio12dancestation.github.io/radio12app/';
-    const webLink = 'https://www.facebook.com/sharer/sharer.php?u=https://radio12dancestation.github.io/radio12app/';
-    window.location = appLink;
-    setTimeout(() => { window.location = webLink; }, 1500);
-  });
-
-  let deferredPrompt;
-  const installBtn = document.getElementById('installButton');
-  installBtn.style.display = 'none';
-
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    installBtn.style.display = 'inline-block';
-  });
-
-  installBtn.addEventListener('click', () => {
-    installBtn.style.display = 'none';
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      deferredPrompt = null;
+    document.getElementById('facebookButton').addEventListener('click', () => {
+      const appLink = 'fb://facewebmodal/f?href=https://radio12dancestation.github.io/radio12app/';
+      const webLink = 'https://www.facebook.com/sharer/sharer.php?u=https://radio12dancestation.github.io/radio12app/';
+      window.location = appLink;
+      setTimeout(() => { window.location = webLink; }, 1500);
     });
-  });
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(() => console.log('Service Worker registrato'))
-      .catch(err => console.error('Errore Service Worker:', err));
-  }
-</script>
+    let deferredPrompt;
+    const installBtn = document.getElementById('installButton');
+    installBtn.style.display = 'none';
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-block';
+    });
+
+    installBtn.addEventListener('click', () => {
+      installBtn.style.display = 'none';
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        deferredPrompt = null;
+      });
+    });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker registrato'))
+        .catch(err => console.error('Errore Service Worker:', err));
+    }
+  </script>
+</body>
+</html>
