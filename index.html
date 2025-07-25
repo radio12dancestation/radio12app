@@ -140,7 +140,21 @@
 
   <script>
     function switchPlayer(id) {
+      // Disattiva tutti i player
       document.querySelectorAll('.player').forEach(p => p.classList.remove('active'));
+
+      // Se si passa a Zeno, ferma Caster
+      if (id === 'zeno') {
+        const casterIframe = document.querySelector('.cstrEmbed iframe');
+        if (casterIframe) {
+          const container = document.querySelector('.cstrEmbed');
+          const htmlBackup = container.innerHTML;
+          container.innerHTML = ''; // svuota
+          setTimeout(() => container.innerHTML = htmlBackup, 500); // ricarica dopo mezzo secondo
+        }
+      }
+
+      // Attiva il player selezionato
       document.getElementById(id).classList.add('active');
     }
 
@@ -177,6 +191,7 @@
   </script>
 </body>
 </html>
+
 
 
 
