@@ -2,6 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Radio12 WebApp</title>
   <style>
     body {
@@ -9,18 +10,25 @@
       color: #30F00A;
       font-family: sans-serif;
       text-align: center;
-      padding: 40px 10px;
+      margin: 0;
+      padding: 20px 10px;
+    }
+
+    h2 {
+      font-size: 1.6em;
+      margin-bottom: 15px;
     }
 
     .indicator {
       display: inline-block;
-      margin: 0 10px;
-      padding: 8px 18px;
+      margin: 6px 5px;
+      padding: 10px 18px;
       border: 2px solid #30F00A;
       border-radius: 25px;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: bold;
       opacity: 0.4;
+      transition: 0.3s;
     }
 
     .indicator.active {
@@ -31,23 +39,30 @@
 
     #switch-btn {
       margin: 20px auto;
-      padding: 10px 25px;
-      font-size: 18px;
+      padding: 12px 24px;
+      font-size: 16px;
       background-color: #30F00A;
       color: black;
       border: none;
       border-radius: 25px;
       cursor: pointer;
+      transition: 0.2s;
+    }
+
+    #switch-btn:active {
+      transform: scale(0.96);
     }
 
     .player {
-      margin-top: 30px;
+      margin-top: 25px;
     }
 
-    iframe, audio {
-      width: 90%;
-      max-width: 500px;
-      border-radius: 10px;
+    iframe {
+      width: 100%;
+      max-width: 420px;
+      height: 60px;
+      border-radius: 12px;
+      border: none;
     }
   </style>
 </head>
@@ -56,56 +71,49 @@
   <h2>🎧 Ascolta Radio12</h2>
 
   <div>
-    <span id="label-dancestation" class="indicator active">Radio12 Dancestation</span>
-    <span id="label-dancefloor" class="indicator">Radio12 Dancefloor</span>
+    <span id="label-dancestation" class="indicator active">Dancestation</span>
+    <span id="label-dancefloor" class="indicator">Dancefloor</span>
   </div>
 
   <button id="switch-btn">SWITCH</button>
 
-  <div class="player">
-    <div id="player-caster">
-      <audio id="caster-audio" controls autoplay>
-        <source src="https://uk23freenew.listen2myradio.com/live.mp3?typeportmount=s1_15482_stream_665086653" type="audio/mpeg">
-        Il tuo browser non supporta l'audio HTML5.
-      </audio>
-    </div>
-
-    <div id="player-zeno" style="display: none;">
-      <iframe id="zeno-iframe" src="https://zeno.fm/player/radio12-dancestation" height="60" frameborder="0" scrolling="no" allow="autoplay"></iframe>
-    </div>
-  </div>
+  <div class="player" id="player-container"></div>
 
   <script>
     let current = 'caster';
-
-    const casterPlayer = document.getElementById('player-caster');
-    const zenoPlayer = document.getElementById('player-zeno');
-    const casterAudio = document.getElementById('caster-audio');
-
+    const playerContainer = document.getElementById('player-container');
     const labelDancestation = document.getElementById('label-dancestation');
     const labelDancefloor = document.getElementById('label-dancefloor');
 
-    document.getElementById('switch-btn').addEventListener('click', () => {
-      if (current === 'caster') {
-        casterAudio.pause();
-        casterPlayer.style.display = 'none';
-        zenoPlayer.style.display = 'block';
-        labelDancestation.classList.remove('active');
-        labelDancefloor.classList.add('active');
-        current = 'zeno';
-      } else {
-        zenoPlayer.style.display = 'none';
-        casterPlayer.style.display = 'block';
-        casterAudio.load(); // per farlo ripartire da capo
-        casterAudio.play();
-        labelDancefloor.classList.remove('active');
+    function loadPlayer(station) {
+      playerContainer.innerHTML = ''; // Rimuove il player precedente
+      const iframe = document.createElement('iframe');
+
+      if (station === 'caster') {
+        iframe.src = 'https://player.listen2myradio.com/15482/';
         labelDancestation.classList.add('active');
-        current = 'caster';
+        labelDancefloor.classList.remove('active');
+      } else {
+        iframe.src = 'https://zeno.fm/player/radio12-dancestation';
+        labelDancefloor.classList.add('active');
+        labelDancestation.classList.remove('active');
       }
+
+      iframe.allow = 'autoplay';
+      playerContainer.appendChild(iframe);
+    }
+
+    document.getElementById('switch-btn').addEventListener('click', () => {
+      current = current === 'caster' ? 'zeno' : 'caster';
+      loadPlayer(current);
     });
+
+    // Caricamento iniziale
+    loadPlayer(current);
   </script>
 </body>
 </html>
+
 
 
 
