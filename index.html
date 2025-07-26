@@ -105,24 +105,25 @@
     <button onclick="switchPlayer('zeno')">🔥 Dancefloor</button>
   </div>
 
+  <!-- Caster Player -->
   <div id="caster" class="player player-container active">
     <h2>🎧 Radio12 Dancestation</h2>
-    <div data-type="newStreamPlayer"
-         data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
-         data-theme="light"
-         data-color="e81e4d"
-         data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
-         data-rendered="false"
-         class="cstrEmbed">
-      <a href="https://www.caster.fm">Shoutcast Hosting</a>
-      <a href="https://www.caster.fm">Stream Hosting</a>
-      <a href="https://www.caster.fm">Radio Server Hosting</a>
+    <div id="casterContainer">
+      <div data-type="newStreamPlayer"
+           data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
+           data-theme="light"
+           data-color="e81e4d"
+           data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
+           class="cstrEmbed">
+        <a href="https://www.caster.fm">Shoutcast Hosting</a>
+      </div>
     </div>
   </div>
 
+  <!-- Zeno Player -->
   <div id="zeno" class="player player-container">
     <h2>🔥 Radio12 Dancefloor</h2>
-    <iframe src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
+    <iframe id="zenoIframe" src="" allow="autoplay"></iframe>
   </div>
 
   <div class="social">
@@ -140,8 +141,22 @@
 
   <script>
     function switchPlayer(id) {
+      // Nasconde tutti i player
       document.querySelectorAll('.player').forEach(p => p.classList.remove('active'));
+
+      // Stop Zeno iframe
+      const zenoIframe = document.getElementById('zenoIframe');
+      if (zenoIframe) zenoIframe.src = '';
+
+      // Mostra solo il player selezionato
       document.getElementById(id).classList.add('active');
+
+      // Se è Zeno, ricarica l'iframe
+      if (id === 'zeno') {
+        setTimeout(() => {
+          document.getElementById('zenoIframe').src = "https://zeno.fm/player/radio12-dancestation";
+        }, 300);
+      }
     }
 
     document.getElementById('facebookButton').addEventListener('click', () => {
@@ -177,4 +192,5 @@
   </script>
 </body>
 </html>
+
 
