@@ -2,93 +2,96 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Radio12 WebApp</title>
-  <script src="//cdn.cloud.caster.fm/widgets/embed.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
       background-color: #000;
       color: #fff;
       text-align: center;
+      font-family: Arial, sans-serif;
       padding: 20px;
     }
-
     h1 {
       color: #e81e4d;
     }
-
-    .channel-buttons {
-      margin-bottom: 10px;
-    }
-
-    .channel-buttons span {
-      padding: 10px 15px;
-      margin: 5px;
-      border-radius: 10px;
-      background-color: #444;
-      display: inline-block;
-      font-size: 16px;
-    }
-
-    .channel-buttons .active {
+    button {
       background-color: #e81e4d;
-    }
-
-    button#switchBtn {
-      margin: 20px;
-      padding: 12px 25px;
-      font-size: 18px;
-      background-color: #e81e4d;
-      color: white;
       border: none;
+      color: white;
+      padding: 12px 20px;
+      margin: 10px;
       border-radius: 8px;
+      font-size: 18px;
       cursor: pointer;
     }
-
-    .player-container {
-      margin-top: 20px;
+    button:hover {
+      background-color: #c4173c;
     }
-
-    iframe {
-      width: 100%;
-      max-width: 400px;
-      height: 120px;
-      border: none;
+    #playerArea {
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
-  <h1>🎶 Radio12 WebApp</h1>
+  <h1>Radio12 WebApp</h1>
 
-  <div class="channel-buttons">
-    <span id="label-caster" class="active">Dancestation 🎧</span>
-    <span id="label-zeno">Dancefloor 🔥</span>
+  <div>
+    <button onclick="switchToCaster()">🎧 Ascolta DanceStation</button>
+    <button onclick="switchToZeno()">🎶 Ascolta Dancefloor</button>
   </div>
 
-  <button id="switchBtn" onclick="switchPlayer()">🎛 CAMBIA STREAM</button>
+  <div id="playerArea"></div>
 
-  <div class="player-container">
-    <div id="playerArea"></div>
-  </div>
+  <!-- Script per Zeno e Caster -->
+  <script src="https://zeno.fm/static/js/widget.js"></script>
+  <script src="https://player.caster.fm/js/cstr.js"></script>
 
   <script>
-    let current = 'caster';
+    let currentPlayer = null;
+
+    function stopCurrentPlayer() {
+      if (currentPlayer === 'zeno') {
+        const iframe = document.querySelector('#playerArea iframe');
+        if (iframe) {
+          iframe.src = ''; // Ferma lo stream zeno
+        }
+      }
+      document.getElementById('playerArea').innerHTML = '';
+      currentPlayer = null;
+    }
+
+    function switchToCaster() {
+      stopCurrentPlayer();
+      loadCaster();
+      currentPlayer = 'caster';
+    }
+
+    function switchToZeno() {
+      stopCurrentPlayer();
+      loadZeno();
+      currentPlayer = 'zeno';
+    }
 
     function loadCaster() {
       document.getElementById('playerArea').innerHTML = `
-        <div data-type="newStreamPlayer"
-             data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
-             data-theme="light"
-             data-color="e81e4d"
-             data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
-             data-rendered="false"
-             class="cstrEmbed">
-          <a href="https://www.caster.fm">Shoutcast Hosting</a>
-          <a href="https://www.caster.fm">Stream Hosting</a>
-          <a href="https://www.caster.fm">Radio Server Hosting</a>
-        </div>`;
+        <div>
+          <div data-type="newStreamPlayer"
+              data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
+              data-theme="light"
+              data-color="e81e4d"
+              data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
+              class="cstrEmbed">
+          </div>
+
+          <div style="font-size: 10px; margin-top: 5px;">
+            <a href="https://www.caster.fm" style="color: #888;" target="_blank">Shoutcast Hosting</a> |
+            <a href="https://www.caster.fm" style="color: #888;" target="_blank">Stream Hosting</a> |
+            <a href="https://www.caster.fm" style="color: #888;" target="_blank">Radio Server Hosting</a>
+          </div>
+        </div>
+      `;
       if (window.CstrEmbed && typeof CstrEmbed.init === 'function') {
         CstrEmbed.init();
       }
@@ -96,32 +99,24 @@
 
     function loadZeno() {
       document.getElementById('playerArea').innerHTML = `
-        <iframe src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
+        <iframe 
+          src="https://zeno.fm/player/radio12-dancefloor" 
+          width="100%" 
+          height="150" 
+          frameborder="0" 
+          allow="autoplay">
+        </iframe>
       `;
     }
 
-    function switchPlayer() {
-      if (current === 'caster') {
-        current = 'zeno';
-        document.getElementById('label-caster').classList.remove('active');
-        document.getElementById('label-zeno').classList.add('active');
-        loadZeno();
-      } else {
-        current = 'caster';
-        document.getElementById('label-zeno').classList.remove('active');
-        document.getElementById('label-caster').classList.add('active');
-        loadCaster();
-      }
-    }
-
-    // Carica caster all’avvio
+    // Carica caster all'avvio
     window.onload = () => {
-      loadCaster();
+      switchToCaster();
     };
   </script>
-
 </body>
 </html>
+
 
 
 
