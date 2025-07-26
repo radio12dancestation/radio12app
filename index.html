@@ -66,52 +66,68 @@
   <!-- Player Caster -->
   <div id="caster" class="player-container active">
     <h2>🎧 Radio12 Dancestation</h2>
-    <div data-type="newStreamPlayer"
-         data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
-         data-theme="light"
-         data-color="e81e4d"
-         data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
-         data-rendered="false"
-         class="cstrEmbed">
-      <a href="https://www.caster.fm">Shoutcast Hosting</a>
-      <a href="https://www.caster.fm">Stream Hosting</a>
-      <a href="https://www.caster.fm">Radio Server Hosting</a>
+    <div id="caster-player">
+      <div data-type="newStreamPlayer"
+           data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
+           data-theme="light"
+           data-color="e81e4d"
+           data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
+           data-rendered="false"
+           class="cstrEmbed">
+        <a href="https://www.caster.fm">Shoutcast Hosting</a>
+        <a href="https://www.caster.fm">Stream Hosting</a>
+        <a href="https://www.caster.fm">Radio Server Hosting</a>
+      </div>
     </div>
   </div>
 
   <!-- Player Zeno -->
   <div id="zeno" class="player-container">
     <h2>🔥 Radio12 Dancefloor</h2>
-    <iframe src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
+    <iframe id="zeno-iframe" src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
   </div>
 
   <script>
     function switchPlayer(id) {
-      const caster = document.getElementById('caster');
-      const zeno = document.getElementById('zeno');
+      const casterContainer = document.getElementById('caster');
+      const zenoContainer = document.getElementById('zeno');
+      const casterPlayer = document.getElementById('caster-player');
 
       if (id === 'caster') {
-        caster.style.display = 'block';
-        zeno.style.display = 'none';
+        zenoContainer.classList.remove('active');
+        casterContainer.classList.add('active');
 
-        // Reinserisci il blocco caster per forzare ricaricamento
-        const oldDiv = caster.querySelector('.cstrEmbed');
-        const newDiv = oldDiv.cloneNode(true);
-        oldDiv.replaceWith(newDiv);
+        // Ricrea il player di Caster
+        casterPlayer.innerHTML = `
+          <div data-type="newStreamPlayer"
+               data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
+               data-theme="light"
+               data-color="e81e4d"
+               data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
+               data-rendered="false"
+               class="cstrEmbed">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Stream Hosting</a>
+            <a href="https://www.caster.fm">Radio Server Hosting</a>
+          </div>`;
 
         if (window.CstrEmbed && typeof CstrEmbed.init === 'function') {
           CstrEmbed.init();
         }
 
       } else if (id === 'zeno') {
-        zeno.style.display = 'block';
-        caster.style.display = 'none';
+        casterContainer.classList.remove('active');
+        zenoContainer.classList.add('active');
+
+        // Rimuove completamente il player caster per fermare lo stream
+        casterPlayer.innerHTML = '';
       }
     }
   </script>
 
 </body>
 </html>
+
 
 
 
