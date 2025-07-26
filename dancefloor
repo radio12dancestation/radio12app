@@ -1,1 +1,119 @@
 
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Radio12 Dance Station</title>
+  <meta name="theme-color" content="#e81e4d">
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    img {
+      width: 200px;
+      margin-bottom: 15px;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin: 0 0 10px;
+    }
+    p.subtitle {
+      font-size: 1rem;
+      margin: 0 0 20px;
+      color: #aaa;
+      text-align: center;
+    }
+    .buttons {
+      margin-bottom: 15px;
+    }
+    .buttons a {
+      margin: 5px;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 6px;
+      background-color: #25D366;
+      color: white;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .player-container {
+      width: 100%;
+      max-width: 400px;
+      background: #111;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #444;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    iframe {
+      width: 100%;
+      height: 100px;
+      border: none;
+      border-radius: 10px;
+    }
+    .social {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    .social-buttons a {
+      display: inline-block;
+      margin: 5px;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #fff;
+    }
+    .facebook { background-color: #3b5998; }
+    .x { background-color: #000; }
+    .whatsapp { background-color: #25D366; }
+  </style>
+</head>
+<body>
+  <img src="https://i.postimg.cc/Bnn3vrGg/0.png" alt="Radio12 Dance Station Logo" />
+  <h1>Radio12</h1>
+  <p class="subtitle">Due anime, un'unica passione: la musica dance</p>
+
+  <div class="buttons">
+    <a href="index.html">🎧 Dancestation</a>
+    <a href="dancefloor.html">🔥 Dancefloor</a>
+  </div>
+
+  <div class="player-container">
+    <h2>🎧 Radio12 Dancestation</h2>
+    <div data-type="newStreamPlayer"
+         data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
+         data-theme="light"
+         data-color="e81e4d"
+         data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
+         class="cstrEmbed">
+      <a href="https://www.caster.fm">Shoutcast Hosting</a>
+    </div>
+  </div>
+
+  <div class="social">
+    Seguici su Instagram:<br />
+    <a href="https://www.instagram.com/radio12dancestation/" target="_blank">@radio12dancestation</a>
+    <div class="social-buttons">
+      <a class="facebook" href="#">Facebook</a>
+      <a class="x" href="#">X</a>
+      <a class="whatsapp" href="#">WhatsApp</a>
+    </div>
+  </div>
+
+  <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
+</body>
+</html>
