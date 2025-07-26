@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Radio12 Dance Station</title>
-  <link rel="manifest" href="manifest.json" />
+  <title>Radio12 Dancefloor</title>
   <meta name="theme-color" content="#e81e4d">
   <style>
     body {
@@ -37,7 +36,7 @@
     .buttons {
       margin-bottom: 15px;
     }
-    .buttons button {
+    .buttons a {
       margin: 5px;
       padding: 10px 14px;
       border: none;
@@ -45,7 +44,8 @@
       background-color: #25D366;
       color: white;
       font-size: 0.9rem;
-      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
     }
     .player-container {
       width: 100%;
@@ -91,8 +91,6 @@
       border-radius: 6px;
       cursor: pointer;
     }
-    .player { display: none; }
-    .player.active { display: block; }
   </style>
 </head>
 <body>
@@ -101,26 +99,11 @@
   <p class="subtitle">Due anime, un'unica passione: la musica dance</p>
 
   <div class="buttons">
-    <button onclick="switchPlayer('caster')">🎧 Dancestation</button>
-    <button onclick="switchPlayer('zeno')">🔥 Dancefloor</button>
+    <a href="dancestation.html">🎧 Dancestation</a>
+    <a href="dancefloor.html">🔥 Dancefloor</a>
   </div>
 
-  <div id="caster" class="player player-container active">
-    <h2>🎧 Radio12 Dancestation</h2>
-    <div data-type="newStreamPlayer"
-         data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
-         data-theme="light"
-         data-color="e81e4d"
-         data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
-         data-rendered="false"
-         class="cstrEmbed">
-      <a href="https://www.caster.fm">Shoutcast Hosting</a>
-      <a href="https://www.caster.fm">Stream Hosting</a>
-      <a href="https://www.caster.fm">Radio Server Hosting</a>
-    </div>
-  </div>
-
-  <div id="zeno" class="player player-container">
+  <div class="player-container">
     <h2>🔥 Radio12 Dancefloor</h2>
     <iframe src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
   </div>
@@ -136,14 +119,7 @@
     </div>
   </div>
 
-  <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
-
   <script>
-    function switchPlayer(id) {
-      document.querySelectorAll('.player').forEach(p => p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-
     document.getElementById('facebookButton').addEventListener('click', () => {
       const appLink = 'fb://facewebmodal/f?href=https://radio12dancestation.github.io/radio12app/';
       const webLink = 'https://www.facebook.com/sharer/sharer.php?u=https://radio12dancestation.github.io/radio12app/';
@@ -168,15 +144,10 @@
         deferredPrompt = null;
       });
     });
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('Service Worker registrato'))
-        .catch(err => console.error('Errore Service Worker:', err));
-    }
   </script>
 </body>
 </html>
+
 
 
 
