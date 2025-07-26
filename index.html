@@ -1,10 +1,9 @@
-<!-- File: dancestation.html -->
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Radio12 Dancestation</title>
+  <title>Radio12 Dance Station</title>
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#e81e4d">
   <style>
@@ -38,7 +37,7 @@
     .buttons {
       margin-bottom: 15px;
     }
-    .buttons a {
+    .buttons button {
       margin: 5px;
       padding: 10px 14px;
       border: none;
@@ -47,7 +46,6 @@
       color: white;
       font-size: 0.9rem;
       cursor: pointer;
-      text-decoration: none;
     }
     .player-container {
       width: 100%;
@@ -93,17 +91,21 @@
       border-radius: 6px;
       cursor: pointer;
     }
+    .player { display: none; }
+    .player.active { display: block; }
   </style>
 </head>
 <body>
-  <img src="https://i.postimg.cc/Bnn3vrGg/0.png" alt="Radio12 Logo" />
+  <img src="https://i.postimg.cc/Bnn3vrGg/0.png" alt="Radio12 Dance Station Logo" />
   <h1>Radio12</h1>
   <p class="subtitle">Due anime, un'unica passione: la musica dance</p>
+
   <div class="buttons">
-    <a href="dancestation.html">🎧 Dancestation</a>
-    <a href="dancefloor.html">🔥 Dancefloor</a>
+    <button onclick="switchPlayer('caster')">🎧 Dancestation</button>
+    <button onclick="switchPlayer('zeno')">🔥 Dancefloor</button>
   </div>
-  <div class="player-container">
+
+  <div id="caster" class="player player-container active">
     <h2>🎧 Radio12 Dancestation</h2>
     <div data-type="newStreamPlayer"
          data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
@@ -117,24 +119,64 @@
       <a href="https://www.caster.fm">Radio Server Hosting</a>
     </div>
   </div>
+
+  <div id="zeno" class="player player-container">
+    <h2>🔥 Radio12 Dancefloor</h2>
+    <iframe src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
+  </div>
+
   <div class="social">
     Seguici su Instagram:<br />
     <a href="https://www.instagram.com/radio12dancestation/" target="_blank" rel="noopener noreferrer">@radio12dancestation</a>
     <div class="social-buttons">
-      <button class="facebook">Facebook</button>
-      <a class="x" href="#">X</a>
-      <a class="whatsapp" href="#">WhatsApp</a>
+      <button id="facebookButton" class="facebook">Facebook</button>
+      <a class="x" href="https://x.com/intent/tweet?url=https://radio12dancestation.github.io/radio12app/&text=Scopri%20Radio12%20Dance%20Station!" target="_blank">X</a>
+      <a class="whatsapp" href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20https://radio12dancestation.github.io/radio12app/" target="_blank">WhatsApp</a>
       <button id="installButton">📲 Aggiungi alla Home</button>
     </div>
   </div>
+
   <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
+
+  <script>
+    function switchPlayer(id) {
+      document.querySelectorAll('.player').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    document.getElementById('facebookButton').addEventListener('click', () => {
+      const appLink = 'fb://facewebmodal/f?href=https://radio12dancestation.github.io/radio12app/';
+      const webLink = 'https://www.facebook.com/sharer/sharer.php?u=https://radio12dancestation.github.io/radio12app/';
+      window.location = appLink;
+      setTimeout(() => { window.location = webLink; }, 1500);
+    });
+
+    let deferredPrompt;
+    const installBtn = document.getElementById('installButton');
+    installBtn.style.display = 'none';
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-block';
+    });
+
+    installBtn.addEventListener('click', () => {
+      installBtn.style.display = 'none';
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        deferredPrompt = null;
+      });
+    });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('Service Worker registrato'))
+        .catch(err => console.error('Errore Service Worker:', err));
+    }
+  </script>
 </body>
 </html>
-
-<!-- File: dancefloor.html -->
-<!-- Stessa struttura di sopra, cambia solo il player -->
-<!-- Sostituirò solo la parte player con Zeno -->
-<!-- Vuoi che proceda subito con la generazione anche di questo file? -->
 
 
 
