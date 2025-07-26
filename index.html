@@ -105,30 +105,21 @@
     <button onclick="switchPlayer('zeno')">🔥 Dancefloor</button>
   </div>
 
-  <!-- Caster Player -->
   <div id="caster" class="player player-container active">
     <h2>🎧 Radio12 Dancestation</h2>
-    <div id="casterContainer">
-      <div data-type="newStreamPlayer"
-           data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
-           data-theme="light"
-           data-color="e81e4d"
-           data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
-           class="cstrEmbed">
-        <a href="https://www.caster.fm">Shoutcast Hosting</a>
-      </div>
+    <div id="casterPlayer">
+      <!-- Player inserito dinamicamente via JS -->
     </div>
   </div>
 
-  <!-- Zeno Player -->
   <div id="zeno" class="player player-container">
     <h2>🔥 Radio12 Dancefloor</h2>
-    <iframe id="zenoIframe" src="" allow="autoplay"></iframe>
+    <iframe src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
   </div>
 
   <div class="social">
     Seguici su Instagram:<br />
-    <a href="https://www.instagram.com/radio12dancestation/" target="_blank" rel="noopener noreferrer">@radio12dancestation</a>
+    <a href="https://www.instagram.com/radio12dancestation/" target="_blank">@radio12dancestation</a>
     <div class="social-buttons">
       <button id="facebookButton" class="facebook">Facebook</button>
       <a class="x" href="https://x.com/intent/tweet?url=https://radio12dancestation.github.io/radio12app/&text=Scopri%20Radio12%20Dance%20Station!" target="_blank">X</a>
@@ -141,21 +132,32 @@
 
   <script>
     function switchPlayer(id) {
-      // Nasconde tutti i player
       document.querySelectorAll('.player').forEach(p => p.classList.remove('active'));
-
-      // Stop Zeno iframe
-      const zenoIframe = document.getElementById('zenoIframe');
-      if (zenoIframe) zenoIframe.src = '';
-
-      // Mostra solo il player selezionato
       document.getElementById(id).classList.add('active');
 
-      // Se è Zeno, ricarica l'iframe
-      if (id === 'zeno') {
+      if (id === 'caster') {
+        const container = document.getElementById('casterPlayer');
+        container.innerHTML = ''; // Reset
+
+        const playerHTML = `
+          <div data-type="newStreamPlayer"
+               data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
+               data-theme="light"
+               data-color="e81e4d"
+               data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
+               data-rendered="false"
+               class="cstrEmbed">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Stream Hosting</a>
+            <a href="https://www.caster.fm">Radio Server Hosting</a>
+          </div>
+        `;
+        container.innerHTML = playerHTML;
         setTimeout(() => {
-          document.getElementById('zenoIframe').src = "https://zeno.fm/player/radio12-dancestation";
-        }, 300);
+          if (window.CstrEmbed && typeof CstrEmbed.init === 'function') {
+            CstrEmbed.init();
+          }
+        }, 100);
       }
     }
 
@@ -179,9 +181,7 @@
     installBtn.addEventListener('click', () => {
       installBtn.style.display = 'none';
       deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        deferredPrompt = null;
-      });
+      deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
     });
 
     if ('serviceWorker' in navigator) {
@@ -192,5 +192,6 @@
   </script>
 </body>
 </html>
+
 
 
