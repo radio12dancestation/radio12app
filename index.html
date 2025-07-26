@@ -1,201 +1,149 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Radio12 Dance Station</title>
-  <link rel="manifest" href="manifest.json" />
-  <meta name="theme-color" content="#e81e4d">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio12 Player Switch</title>
   <style>
     body {
-      margin: 0;
-      background-color: #000;
-      color: #fff;
       font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin: 1rem;
+    }
+
+    .button-container {
       display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      background: #444;
+      color: white;
+      cursor: pointer;
+      font-size: 1rem;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    button.active {
+      background: #e81e4d;
+    }
+
+    .player {
+      display: none;
+      justify-content: center;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      padding: 20px;
-      box-sizing: border-box;
+      padding: 10px;
     }
-    img {
-      width: 200px;
-      margin-bottom: 15px;
+
+    .player.active {
+      display: flex;
     }
-    h1 {
-      font-size: 1.8rem;
-      margin: 0 0 10px;
-    }
-    p.subtitle {
-      font-size: 1rem;
-      margin: 0 0 20px;
-      color: #aaa;
-      text-align: center;
-    }
-    .buttons {
-      margin-bottom: 15px;
-    }
-    .buttons button {
-      margin: 5px;
-      padding: 10px 14px;
-      border: none;
-      border-radius: 6px;
-      background-color: #444;
-      color: white;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    .buttons button.active {
-      background-color: #e81e4d;
-    }
-    .player-container {
+
+    iframe, .cstrEmbed {
       width: 100%;
-      max-width: 400px;
-      background: #111;
-      padding: 15px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #444;
-      margin-bottom: 25px;
-      text-align: center;
-    }
-    iframe {
-      width: 100%;
-      height: 100px;
+      max-width: 360px;
+      height: 120px;
       border: none;
-      border-radius: 10px;
+      overflow: hidden;
     }
-    .social {
-      margin-top: 30px;
-      font-size: 0.9rem;
-      text-align: center;
+
+    @media (max-width: 500px) {
+      iframe, .cstrEmbed {
+        max-width: 100%;
+        height: 120px;
+      }
     }
-    .social-buttons a, .social-buttons button {
-      display: inline-block;
-      margin: 5px;
-      padding: 8px 12px;
-      font-size: 0.85rem;
-      border-radius: 6px;
-      text-decoration: none;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-    }
-    .facebook { background-color: #3b5998; }
-    .x { background-color: #000; }
-    .whatsapp { background-color: #25D366; }
-    #installButton {
-      margin-top: 15px;
-      background-color: #ff9800;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .player { display: none; }
-    .player.active { display: block; }
   </style>
 </head>
 <body>
-  <img src="https://i.postimg.cc/Bnn3vrGg/0.png" alt="Radio12 Dance Station Logo" />
-  <h1>Radio12</h1>
-  <p class="subtitle">Due anime, un'unica passione: la musica dance</p>
 
-  <div class="buttons">
-    <button id="btn-caster" onclick="switchPlayer('caster')">🎧 Dancestation</button>
-    <button id="btn-zeno" onclick="switchPlayer('zeno')">🔥 Dancefloor</button>
+  <h1>🎧 Scegli il canale di ascolto</h1>
+
+  <div class="button-container">
+    <button id="btn-caster" onclick="switchPlayer('caster')">DANCESTATION</button>
+    <button id="btn-zeno" onclick="switchPlayer('zeno')">DANCEFLOOR</button>
   </div>
 
-  <div id="caster" class="player player-container active">
+  <div id="caster" class="player active">
     <h2>🎧 Radio12 Dancestation</h2>
-    <div data-type="newStreamPlayer"
-         data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
-         data-theme="light"
-         data-color="e81e4d"
-         data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
-         data-rendered="false"
-         class="cstrEmbed">
-      <a href="https://www.caster.fm">Shoutcast Hosting</a>
-      <a href="https://www.caster.fm">Stream Hosting</a>
-      <a href="https://www.caster.fm">Radio Server Hosting</a>
+    <div id="caster-player">
+      <div data-type="newStreamPlayer"
+           data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
+           data-theme="light"
+           data-color="e81e4d"
+           data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
+           data-rendered="false"
+           class="cstrEmbed">
+        <a href="https://www.caster.fm">Shoutcast Hosting</a>
+        <a href="https://www.caster.fm">Stream Hosting</a>
+        <a href="https://www.caster.fm">Radio Server Hosting</a>
+      </div>
     </div>
   </div>
 
-  <div id="zeno" class="player player-container">
-    <h2>🔥 Radio12 Dancefloor</h2>
-    <div id="zeno-iframe-container">
-      <iframe id="zeno-iframe" src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
-    </div>
+  <div id="zeno" class="player">
+    <h2>🎧 Radio12 Dancefloor</h2>
+    <iframe id="zeno-iframe" src="" allow="autoplay"></iframe>
   </div>
-
-  <div class="social">
-    Seguici su Instagram:<br />
-    <a href="https://www.instagram.com/radio12dancestation/" target="_blank" rel="noopener noreferrer">@radio12dancestation</a>
-    <div class="social-buttons">
-      <button id="facebookButton" class="facebook">Facebook</button>
-      <a class="x" href="https://x.com/intent/tweet?url=https://radio12dancestation.github.io/radio12app/&text=Scopri%20Radio12%20Dance%20Station!" target="_blank">X</a>
-      <a class="whatsapp" href="https://wa.me/?text=Ascolta%20Radio12%20Dance%20Station%20https://radio12dancestation.github.io/radio12app/" target="_blank">WhatsApp</a>
-      <button id="installButton">📲 Aggiungi alla Home</button>
-    </div>
-  </div>
-
-  <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
 
   <script>
     function switchPlayer(id) {
-      // Attiva visibilità player
+      // Nasconde tutti
       document.querySelectorAll('.player').forEach(p => p.classList.remove('active'));
       document.getElementById(id).classList.add('active');
 
-      // Cambia colore pulsanti
+      // Colori attivi pulsanti
       document.getElementById('btn-caster').classList.remove('active');
       document.getElementById('btn-zeno').classList.remove('active');
       document.getElementById('btn-' + id).classList.add('active');
 
-      // Stop iframe Zeno quando passo a Caster
+      const zenoIframe = document.getElementById('zeno-iframe');
+      const casterDiv = document.getElementById('caster-player');
+
       if (id === 'caster') {
-        const iframe = document.getElementById('zeno-iframe');
-        iframe.src = ""; // Stop stream
-      } else {
-        const iframe = document.getElementById('zeno-iframe');
-        iframe.src = "https://zeno.fm/player/radio12-dancestation"; // Restart stream
+        // Ferma Zeno
+        zenoIframe.src = '';
+        // Ricrea player Caster
+        casterDiv.innerHTML = `
+          <div data-type="newStreamPlayer"
+               data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
+               data-theme="light"
+               data-color="e81e4d"
+               data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
+               data-rendered="false"
+               class="cstrEmbed">
+            <a href="https://www.caster.fm">Shoutcast Hosting</a>
+            <a href="https://www.caster.fm">Stream Hosting</a>
+            <a href="https://www.caster.fm">Radio Server Hosting</a>
+          </div>
+        `;
+        if (typeof Cstr !== 'undefined') Cstr.renderAll();
+      } else if (id === 'zeno') {
+        // Ferma Caster
+        casterDiv.innerHTML = '';
+        // Avvia Zeno
+        zenoIframe.src = 'https://zeno.fm/player/radio12-dancestation';
       }
     }
-
-    document.getElementById('facebookButton').addEventListener('click', () => {
-      const appLink = 'fb://facewebmodal/f?href=https://radio12dancestation.github.io/radio12app/';
-      const webLink = 'https://www.facebook.com/sharer/sharer.php?u=https://radio12dancestation.github.io/radio12app/';
-      window.location = appLink;
-      setTimeout(() => { window.location = webLink; }, 1500);
-    });
-
-    let deferredPrompt;
-    const installBtn = document.getElementById('installButton');
-    installBtn.style.display = 'none';
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.style.display = 'inline-block';
-    });
-
-    installBtn.addEventListener('click', () => {
-      installBtn.style.display = 'none';
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        deferredPrompt = null;
-      });
-    });
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('Service Worker registrato'))
-        .catch(err => console.error('Errore Service Worker:', err));
-    }
   </script>
+
+  <script src="https://host.caster.fm/js/cstr.js"></script>
+
 </body>
 </html>
 
