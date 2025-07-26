@@ -1,41 +1,39 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Radio12 Player Switch</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Radio12 Switch</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: sans-serif;
       background: #111;
-      color: #fff;
+      color: white;
+      text-align: center;
       margin: 0;
       padding: 0;
-      text-align: center;
     }
 
     h1 {
-      font-size: 1.4rem;
-      margin: 1rem;
+      font-size: 1.3rem;
+      margin-top: 1rem;
     }
 
     .button-container {
       display: flex;
       justify-content: center;
-      margin-bottom: 1rem;
       gap: 10px;
+      margin: 1rem 0;
       flex-wrap: wrap;
     }
 
     button {
       padding: 10px 20px;
-      border: none;
       background: #444;
       color: white;
-      cursor: pointer;
-      font-size: 1rem;
+      border: none;
       border-radius: 5px;
-      transition: 0.3s;
+      cursor: pointer;
     }
 
     button.active {
@@ -44,35 +42,30 @@
 
     .player {
       display: none;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      padding: 10px;
     }
 
     .player.active {
-      display: flex;
+      display: block;
     }
 
-    iframe, .cstrEmbed {
+    iframe {
+      border: none;
       width: 100%;
       max-width: 360px;
       height: 120px;
-      border: none;
-      overflow: hidden;
+      margin: auto;
     }
 
     @media (max-width: 500px) {
-      iframe, .cstrEmbed {
+      iframe {
         max-width: 100%;
-        height: 120px;
       }
     }
   </style>
 </head>
 <body>
 
-  <h1>🎧 Scegli il canale di ascolto</h1>
+  <h1>🎧 Scegli il canale</h1>
 
   <div class="button-container">
     <button id="btn-caster" onclick="switchPlayer('caster')">DANCESTATION</button>
@@ -81,71 +74,48 @@
 
   <div id="caster" class="player active">
     <h2>🎧 Radio12 Dancestation</h2>
-    <div id="caster-player">
-      <div data-type="newStreamPlayer"
-           data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
-           data-theme="light"
-           data-color="e81e4d"
-           data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
-           data-rendered="false"
-           class="cstrEmbed">
-        <a href="https://www.caster.fm">Shoutcast Hosting</a>
-        <a href="https://www.caster.fm">Stream Hosting</a>
-        <a href="https://www.caster.fm">Radio Server Hosting</a>
-      </div>
-    </div>
+    <iframe id="caster-iframe" allow="autoplay" src="https://caster.fm/widgets/player/a6e30347-88ca-45bc-baf4-8714f3f10463"></iframe>
   </div>
 
   <div id="zeno" class="player">
     <h2>🎧 Radio12 Dancefloor</h2>
-    <iframe id="zeno-iframe" src="" allow="autoplay"></iframe>
+    <iframe id="zeno-iframe" allow="autoplay" src=""></iframe>
   </div>
 
   <script>
     function switchPlayer(id) {
-      // Nasconde tutti
-      document.querySelectorAll('.player').forEach(p => p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-
-      // Colori attivi pulsanti
-      document.getElementById('btn-caster').classList.remove('active');
-      document.getElementById('btn-zeno').classList.remove('active');
-      document.getElementById('btn-' + id).classList.add('active');
-
+      const caster = document.getElementById('caster');
+      const zeno = document.getElementById('zeno');
+      const casterBtn = document.getElementById('btn-caster');
+      const zenoBtn = document.getElementById('btn-zeno');
+      const casterIframe = document.getElementById('caster-iframe');
       const zenoIframe = document.getElementById('zeno-iframe');
-      const casterDiv = document.getElementById('caster-player');
+
+      // Reset tutti
+      caster.classList.remove('active');
+      zeno.classList.remove('active');
+      casterBtn.classList.remove('active');
+      zenoBtn.classList.remove('active');
+
+      // Ferma entrambi gli iframe
+      casterIframe.src = '';
+      zenoIframe.src = '';
 
       if (id === 'caster') {
-        // Ferma Zeno
-        zenoIframe.src = '';
-        // Ricrea player Caster
-        casterDiv.innerHTML = `
-          <div data-type="newStreamPlayer"
-               data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
-               data-theme="light"
-               data-color="e81e4d"
-               data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
-               data-rendered="false"
-               class="cstrEmbed">
-            <a href="https://www.caster.fm">Shoutcast Hosting</a>
-            <a href="https://www.caster.fm">Stream Hosting</a>
-            <a href="https://www.caster.fm">Radio Server Hosting</a>
-          </div>
-        `;
-        if (typeof Cstr !== 'undefined') Cstr.renderAll();
-      } else if (id === 'zeno') {
-        // Ferma Caster
-        casterDiv.innerHTML = '';
-        // Avvia Zeno
-        zenoIframe.src = 'https://zeno.fm/player/radio12-dancestation';
+        caster.classList.add('active');
+        casterBtn.classList.add('active');
+        casterIframe.src = "https://caster.fm/widgets/player/a6e30347-88ca-45bc-baf4-8714f3f10463";
+      } else {
+        zeno.classList.add('active');
+        zenoBtn.classList.add('active');
+        zenoIframe.src = "https://zeno.fm/player/radio12-dancestation";
       }
     }
   </script>
 
-  <script src="https://host.caster.fm/js/cstr.js"></script>
-
 </body>
 </html>
+
 
 
 
