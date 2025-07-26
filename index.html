@@ -3,83 +3,126 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Radio12 Switch Player</title>
+  <title>Radio12 Dance Station</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#e81e4d">
   <style>
     body {
-      background: #000;
-      color: #30F00A;
+      margin: 0;
+      background-color: #000;
+      color: #fff;
       font-family: Arial, sans-serif;
-      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       padding: 20px;
+      box-sizing: border-box;
     }
-    .indicator {
-      display: inline-block;
-      margin: 10px 15px;
-      padding: 12px 30px;
-      border: 2px solid #30F00A;
-      border-radius: 25px;
-      opacity: 0.4;
-      font-weight: bold;
-      user-select: none;
+    img {
+      width: 200px;
+      margin-bottom: 15px;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin: 0 0 10px;
+    }
+    p.subtitle {
+      font-size: 1rem;
+      margin: 0 0 20px;
+      color: #aaa;
+      text-align: center;
+    }
+    .buttons button {
+      margin: 5px;
+      padding: 10px 14px;
+      border: none;
+      border-radius: 6px;
+      background-color: #333;
+      color: white;
+      font-size: 0.9rem;
       cursor: pointer;
-      transition: opacity 0.3s, background-color 0.3s, color 0.3s;
     }
-    .indicator.active {
-      opacity: 1;
-      background-color: #30F00A;
-      color: #000;
+    .buttons button.active {
+      background-color: #e81e4d;
     }
-    iframe {
-      margin-top: 25px;
+    .player-container {
       width: 100%;
       max-width: 400px;
-      height: 120px;
+      background: #111;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #444;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    iframe {
+      width: 100%;
+      height: 100px;
       border: none;
       border-radius: 10px;
     }
+    .player { display: none; }
+    .player.active { display: block; }
   </style>
 </head>
 <body>
+  <img src="https://i.postimg.cc/Bnn3vrGg/0.png" alt="Radio12 Dance Station Logo" />
+  <h1>Radio12</h1>
+  <p class="subtitle">Due anime, un'unica passione: la musica dance</p>
 
-  <h2>🎧 Radio12 Switch Player</h2>
-
-  <div>
-    <span id="btnCaster" class="indicator active">DanceStation</span>
-    <span id="btnZeno" class="indicator">Dancefloor</span>
+  <div class="buttons">
+    <button id="btnCaster" onclick="switchPlayer('caster')">🎧 Dancestation</button>
+    <button id="btnZeno" onclick="switchPlayer('zeno')">🔥 Dancefloor</button>
   </div>
 
-  <div id="playerContainer" style="margin-top:20px;">
-    <iframe id="casterPlayer" src="https://caster.fm/stations/Radio12DanceStation/player" allow="autoplay"></iframe>
-    <iframe id="zenoPlayer" src="https://zeno.fm/player/s8zqeg20efhvv" allow="autoplay" style="display:none;"></iframe>
+  <div id="caster" class="player player-container active">
+    <h2>🎧 Radio12 Dancestation</h2>
+    <div data-type="newStreamPlayer"
+         data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
+         data-theme="light"
+         data-color="e81e4d"
+         data-channelId="9f77c74a-b47f-42e6-bc0b-ea3927643bd1"
+         class="cstrEmbed">
+      <a href="https://www.caster.fm">Shoutcast Hosting</a>
+      <a href="https://www.caster.fm">Stream Hosting</a>
+      <a href="https://www.caster.fm">Radio Server Hosting</a>
+    </div>
   </div>
 
+  <div id="zeno" class="player player-container">
+    <h2>🔥 Radio12 Dancefloor</h2>
+    <div id="zenoContainer">
+      <iframe id="zenoPlayer" src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
+    </div>
+  </div>
+
+  <script src="//cdn.cloud.caster.fm//widgets/embed.js"></script>
   <script>
-    const btnCaster = document.getElementById('btnCaster');
-    const btnZeno = document.getElementById('btnZeno');
-    const casterPlayer = document.getElementById('casterPlayer');
-    const zenoPlayer = document.getElementById('zenoPlayer');
+    function switchPlayer(id) {
+      // Disattiva entrambi
+      document.querySelectorAll('.player').forEach(p => p.classList.remove('active'));
+      document.getElementById('btnCaster').classList.remove('active');
+      document.getElementById('btnZeno').classList.remove('active');
 
-    btnCaster.onclick = () => {
-      if (!btnCaster.classList.contains('active')) {
-        btnCaster.classList.add('active');
-        btnZeno.classList.remove('active');
-        casterPlayer.style.display = "block";
-        casterPlayer.src = casterPlayer.src; // stop Zeno
-        zenoPlayer.style.display = "none";
-      }
-    }
+      if (id === 'zeno') {
+        document.getElementById('zeno').classList.add('active');
+        document.getElementById('btnZeno').classList.add('active');
 
-    btnZeno.onclick = () => {
-      if (!btnZeno.classList.contains('active')) {
-        btnZeno.classList.add('active');
-        btnCaster.classList.remove('active');
-        zenoPlayer.style.display = "block";
-        zenoPlayer.src = zenoPlayer.src; // stop Caster
-        casterPlayer.style.display = "none";
+        // Forza reload iframe per farlo ripartire
+        const zeno = document.getElementById('zenoPlayer');
+        zeno.src = zeno.src;
+
+        // Nasconde caster player (per sicurezza)
+        document.getElementById('caster').classList.remove('active');
+      } else {
+        document.getElementById('caster').classList.add('active');
+        document.getElementById('btnCaster').classList.add('active');
+
+        // Nasconde zeno player
+        document.getElementById('zeno').classList.remove('active');
       }
     }
   </script>
-
 </body>
 </html>
 
