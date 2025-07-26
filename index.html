@@ -1,111 +1,108 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Radio12 WebApp</title>
-  <style>
-    body {
-      background-color: #000;
-      color: #30F00A;
-      font-family: sans-serif;
-      text-align: center;
-      padding: 20px;
-    }
-
-    h2 {
-      font-size: 1.5em;
-    }
-
-    .indicator {
-      display: inline-block;
-      margin: 8px;
-      padding: 10px 20px;
-      border: 2px solid #30F00A;
-      border-radius: 25px;
-      opacity: 0.4;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .indicator.active {
-      opacity: 1;
-      background-color: #30F00A;
-      color: black;
-    }
-
-    button {
-      margin-top: 20px;
-      padding: 12px 30px;
-      border: none;
-      background-color: #30F00A;
-      color: black;
-      border-radius: 25px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    audio {
-      width: 100%;
-      max-width: 400px;
-      margin-top: 30px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Radio12 Player Switch</title>
+<style>
+  body {
+    background: #000;
+    color: #30F00A;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+  }
+  .indicator {
+    display: inline-block;
+    margin: 10px 15px;
+    padding: 12px 30px;
+    border: 2px solid #30F00A;
+    border-radius: 25px;
+    opacity: 0.4;
+    font-weight: bold;
+    user-select: none;
+    cursor: default;
+    transition: opacity 0.3s, background-color 0.3s, color 0.3s;
+  }
+  .indicator.active {
+    opacity: 1;
+    background-color: #30F00A;
+    color: #000;
+  }
+  audio {
+    margin-top: 25px;
+    width: 90vw;
+    max-width: 400px;
+    outline: none;
+    border-radius: 10px;
+  }
+  button#switchBtn {
+    margin-top: 30px;
+    padding: 12px 40px;
+    border: none;
+    background: #30F00A;
+    color: #000;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    user-select: none;
+    transition: background-color 0.3s;
+  }
+  button#switchBtn:hover {
+    background-color: #2abb08;
+  }
+</style>
 </head>
 <body>
 
-  <h2>🎧 Ascolta Radio12</h2>
+<h2>🎧 Radio12 Player Switch</h2>
 
-  <div>
-    <span id="label-dancestation" class="indicator active">Dancestation</span>
-    <span id="label-dancefloor" class="indicator">Dancefloor</span>
-  </div>
+<div>
+  <span id="label-caster" class="indicator active">Caster</span>
+  <span id="label-zeno" class="indicator">Zeno</span>
+</div>
 
-  <button id="switch-btn">SWITCH</button>
+<button id="switchBtn">Switch Player</button>
 
-  <div>
-    <audio id="player" controls autoplay></audio>
-  </div>
+<audio id="player" controls autoplay>
+  <source id="audioSource" src="https://stream.caster.fm/yourcasterstream" type="audio/mpeg" />
+  Il tuo browser non supporta l'elemento audio.
+</audio>
 
-  <script>
-    const player = document.getElementById('player');
-    const labelDS = document.getElementById('label-dancestation');
-    const labelDF = document.getElementById('label-dancefloor');
-    const switchBtn = document.getElementById('switch-btn');
+<script>
+  const casterUrl = "https://stream.caster.fm/yourcasterstream";  // METTI QUI L'URL STREAM CASTER VERO
+  const zenoUrl = "https://stream.zeno.fm/s8zqeg20efhvv";       // URL STREAM ZENO
 
-    // PROXY per Listen2MyRadio (caster)
-    const casterStream = "https://radio12-proxy.onrender.com/stream"; // Proxy attivo
-    const zenoStream = "https://stream.zeno.fm/s8zqeg20efhvv";
+  const player = document.getElementById('player');
+  const audioSource = document.getElementById('audioSource');
+  const labelCaster = document.getElementById('label-caster');
+  const labelZeno = document.getElementById('label-zeno');
+  const switchBtn = document.getElementById('switchBtn');
 
-    let current = "caster";
+  // Stato: true = caster, false = zeno
+  let isCaster = true;
 
-    function setStream(source) {
-      player.pause();
-      player.src = source;
+  switchBtn.addEventListener('click', () => {
+    if (isCaster) {
+      // Passa a Zeno
+      audioSource.src = zenoUrl;
       player.load();
       player.play();
+      labelCaster.classList.remove('active');
+      labelZeno.classList.add('active');
+      isCaster = false;
+    } else {
+      // Passa a Caster
+      audioSource.src = casterUrl;
+      player.load();
+      player.play();
+      labelZeno.classList.remove('active');
+      labelCaster.classList.add('active');
+      isCaster = true;
     }
-
-    function updateLabels(active) {
-      if (active === 'caster') {
-        labelDS.classList.add('active');
-        labelDF.classList.remove('active');
-      } else {
-        labelDF.classList.add('active');
-        labelDS.classList.remove('active');
-      }
-    }
-
-    switchBtn.addEventListener('click', () => {
-      current = current === "caster" ? "zeno" : "caster";
-      const newSrc = current === "caster" ? casterStream : zenoStream;
-      setStream(newSrc);
-      updateLabels(current);
-    });
-
-    // Avvio iniziale su Caster
-    setStream(casterStream);
-  </script>
+  });
+</script>
 
 </body>
 </html>
