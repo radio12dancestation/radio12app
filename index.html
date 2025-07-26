@@ -35,7 +35,7 @@
       text-align: center;
     }
     .buttons {
-      margin-bottom: 15px;
+      margin-bottom: 8px;
     }
     .buttons button {
       margin: 5px;
@@ -46,6 +46,12 @@
       color: white;
       font-size: 0.9rem;
       cursor: pointer;
+    }
+    .warning {
+      color: #ff9800;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+      text-align: center;
     }
     .player-container {
       width: 100%;
@@ -93,7 +99,12 @@
     }
     .player { display: none; }
     .player.active { display: block; }
+    .instagram-icon {
+      font-size: 28px;
+      color: #fff;
+    }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
   <img src="https://i.postimg.cc/Bnn3vrGg/0.png" alt="Radio12 Dance Station Logo" />
@@ -104,6 +115,7 @@
     <button onclick="switchPlayer('caster')">🎧 Dancestation</button>
     <button onclick="switchPlayer('zeno')">🔥 Dancefloor</button>
   </div>
+  <p class="warning">🔁 Prima di cambiare canale, premi stop sul player attivo</p>
 
   <div id="caster" class="player player-container active">
     <h2>🎧 Radio12 Dancestation</h2>
@@ -126,8 +138,9 @@
   </div>
 
   <div class="social">
-    Seguici su Instagram:<br />
-    <a href="https://www.instagram.com/radio12dancestation/" target="_blank" rel="noopener noreferrer">@radio12dancestation</a>
+    <a href="https://www.instagram.com/radio12dancestation/" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-instagram instagram-icon"></i>
+    </a>
     <div class="social-buttons">
       <button id="facebookButton" class="facebook">Facebook</button>
       <a class="x" href="https://x.com/intent/tweet?url=https://radio12dancestation.github.io/radio12app/&text=Scopri%20Radio12%20Dance%20Station!" target="_blank">X</a>
@@ -177,6 +190,7 @@
   </script>
 </body>
 </html>
+
 
 
 
