@@ -10,24 +10,21 @@
       color: #30F00A;
       font-family: sans-serif;
       text-align: center;
-      margin: 0;
-      padding: 20px 10px;
+      padding: 20px;
     }
 
     h2 {
-      font-size: 1.6em;
-      margin-bottom: 15px;
+      font-size: 1.5em;
     }
 
     .indicator {
       display: inline-block;
-      margin: 6px 5px;
-      padding: 10px 18px;
+      margin: 8px;
+      padding: 10px 20px;
       border: 2px solid #30F00A;
       border-radius: 25px;
-      font-size: 15px;
-      font-weight: bold;
       opacity: 0.4;
+      font-weight: bold;
       transition: 0.3s;
     }
 
@@ -37,32 +34,21 @@
       color: black;
     }
 
-    #switch-btn {
-      margin: 20px auto;
-      padding: 12px 24px;
-      font-size: 16px;
+    button {
+      margin-top: 20px;
+      padding: 12px 30px;
+      border: none;
       background-color: #30F00A;
       color: black;
-      border: none;
       border-radius: 25px;
+      font-weight: bold;
       cursor: pointer;
-      transition: 0.2s;
     }
 
-    #switch-btn:active {
-      transform: scale(0.96);
-    }
-
-    .player {
-      margin-top: 25px;
-    }
-
-    iframe {
+    audio {
       width: 100%;
-      max-width: 420px;
-      height: 60px;
-      border-radius: 12px;
-      border: none;
+      max-width: 400px;
+      margin-top: 30px;
     }
   </style>
 </head>
@@ -77,40 +63,50 @@
 
   <button id="switch-btn">SWITCH</button>
 
-  <div class="player" id="player-container"></div>
+  <div>
+    <audio id="player" controls autoplay></audio>
+  </div>
 
   <script>
-    let current = 'caster';
-    const playerContainer = document.getElementById('player-container');
-    const labelDancestation = document.getElementById('label-dancestation');
-    const labelDancefloor = document.getElementById('label-dancefloor');
+    const player = document.getElementById('player');
+    const labelDS = document.getElementById('label-dancestation');
+    const labelDF = document.getElementById('label-dancefloor');
+    const switchBtn = document.getElementById('switch-btn');
 
-    function loadPlayer(station) {
-      playerContainer.innerHTML = ''; // Rimuove il player precedente
-      const iframe = document.createElement('iframe');
+    // PROXY per Listen2MyRadio (caster)
+    const casterStream = "https://radio12-proxy.onrender.com/stream"; // Proxy attivo
+    const zenoStream = "https://stream.zeno.fm/s8zqeg20efhvv";
 
-      if (station === 'caster') {
-        iframe.src = 'https://player.listen2myradio.com/15482/';
-        labelDancestation.classList.add('active');
-        labelDancefloor.classList.remove('active');
-      } else {
-        iframe.src = 'https://zeno.fm/player/radio12-dancestation';
-        labelDancefloor.classList.add('active');
-        labelDancestation.classList.remove('active');
-      }
+    let current = "caster";
 
-      iframe.allow = 'autoplay';
-      playerContainer.appendChild(iframe);
+    function setStream(source) {
+      player.pause();
+      player.src = source;
+      player.load();
+      player.play();
     }
 
-    document.getElementById('switch-btn').addEventListener('click', () => {
-      current = current === 'caster' ? 'zeno' : 'caster';
-      loadPlayer(current);
+    function updateLabels(active) {
+      if (active === 'caster') {
+        labelDS.classList.add('active');
+        labelDF.classList.remove('active');
+      } else {
+        labelDF.classList.add('active');
+        labelDS.classList.remove('active');
+      }
+    }
+
+    switchBtn.addEventListener('click', () => {
+      current = current === "caster" ? "zeno" : "caster";
+      const newSrc = current === "caster" ? casterStream : zenoStream;
+      setStream(newSrc);
+      updateLabels(current);
     });
 
-    // Caricamento iniziale
-    loadPlayer(current);
+    // Avvio iniziale su Caster
+    setStream(casterStream);
   </script>
+
 </body>
 </html>
 
