@@ -18,32 +18,36 @@
       color: #e81e4d;
     }
 
-    .switch-buttons {
-      margin: 20px 0;
+    .channel-buttons {
+      margin-bottom: 10px;
     }
 
-    .switch-buttons button {
-      padding: 10px 20px;
+    .channel-buttons span {
+      padding: 10px 15px;
       margin: 5px;
+      border-radius: 10px;
+      background-color: #444;
+      display: inline-block;
       font-size: 16px;
+    }
+
+    .channel-buttons .active {
       background-color: #e81e4d;
-      color: #fff;
+    }
+
+    button#switchBtn {
+      margin: 20px;
+      padding: 12px 25px;
+      font-size: 18px;
+      background-color: #e81e4d;
+      color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
     }
 
-    .switch-buttons button:hover {
-      background-color: #c5173d;
-    }
-
     .player-container {
-      display: none;
       margin-top: 20px;
-    }
-
-    .player-container.active {
-      display: block;
     }
 
     iframe {
@@ -58,27 +62,22 @@
 
   <h1>🎶 Radio12 WebApp</h1>
 
-  <div class="switch-buttons">
-    <button onclick="switchPlayer('caster')">Dancestation 🎧</button>
-    <button onclick="switchPlayer('zeno')">Dancefloor 🔥</button>
+  <div class="channel-buttons">
+    <span id="label-caster" class="active">Dancestation 🎧</span>
+    <span id="label-zeno">Dancefloor 🔥</span>
   </div>
 
-  <!-- Player Caster -->
-  <div id="caster" class="player-container">
-    <h2>🎧 Radio12 Dancestation</h2>
-    <div id="caster-player"></div>
-  </div>
+  <button id="switchBtn" onclick="switchPlayer()">🎛 CAMBIA STREAM</button>
 
-  <!-- Player Zeno -->
-  <div id="zeno" class="player-container">
-    <h2>🔥 Radio12 Dancefloor</h2>
-    <div id="zeno-player"></div>
+  <div class="player-container">
+    <div id="playerArea"></div>
   </div>
 
   <script>
+    let current = 'caster';
+
     function loadCaster() {
-      const casterPlayer = document.getElementById('caster-player');
-      casterPlayer.innerHTML = `
+      document.getElementById('playerArea').innerHTML = `
         <div data-type="newStreamPlayer"
              data-publicToken="a6e30347-88ca-45bc-baf4-8714f3f10463"
              data-theme="light"
@@ -96,44 +95,28 @@
     }
 
     function loadZeno() {
-      const zenoPlayer = document.getElementById('zeno-player');
-      zenoPlayer.innerHTML = `
+      document.getElementById('playerArea').innerHTML = `
         <iframe src="https://zeno.fm/player/radio12-dancestation" allow="autoplay"></iframe>
       `;
     }
 
-    function stopCaster() {
-      document.getElementById('caster-player').innerHTML = '';
-    }
-
-    function stopZeno() {
-      document.getElementById('zeno-player').innerHTML = '';
-    }
-
-    function switchPlayer(id) {
-      const casterContainer = document.getElementById('caster');
-      const zenoContainer = document.getElementById('zeno');
-
-      if (id === 'caster') {
-        stopZeno();
-        zenoContainer.classList.remove('active');
-
-        loadCaster();
-        casterContainer.classList.add('active');
-
-      } else if (id === 'zeno') {
-        stopCaster();
-        casterContainer.classList.remove('active');
-
+    function switchPlayer() {
+      if (current === 'caster') {
+        current = 'zeno';
+        document.getElementById('label-caster').classList.remove('active');
+        document.getElementById('label-zeno').classList.add('active');
         loadZeno();
-        zenoContainer.classList.add('active');
+      } else {
+        current = 'caster';
+        document.getElementById('label-zeno').classList.remove('active');
+        document.getElementById('label-caster').classList.add('active');
+        loadCaster();
       }
     }
 
-    // Carica Caster all'avvio
+    // Carica caster all’avvio
     window.onload = () => {
       loadCaster();
-      document.getElementById('caster').classList.add('active');
     };
   </script>
 
