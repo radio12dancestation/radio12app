@@ -1,111 +1,88 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Radio12 Player Switch</title>
-<style>
-  body {
-    background: #000;
-    color: #30F00A;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 20px;
-  }
-  .indicator {
-    display: inline-block;
-    margin: 10px 15px;
-    padding: 12px 30px;
-    border: 2px solid #30F00A;
-    border-radius: 25px;
-    opacity: 0.4;
-    font-weight: bold;
-    user-select: none;
-    cursor: default;
-    transition: opacity 0.3s, background-color 0.3s, color 0.3s;
-  }
-  .indicator.active {
-    opacity: 1;
-    background-color: #30F00A;
-    color: #000;
-  }
-  audio {
-    margin-top: 25px;
-    width: 90vw;
-    max-width: 400px;
-    outline: none;
-    border-radius: 10px;
-  }
-  button#switchBtn {
-    margin-top: 30px;
-    padding: 12px 40px;
-    border: none;
-    background: #30F00A;
-    color: #000;
-    font-weight: bold;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 16px;
-    user-select: none;
-    transition: background-color 0.3s;
-  }
-  button#switchBtn:hover {
-    background-color: #2abb08;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Radio12 Switch Player</title>
+  <style>
+    body {
+      background: #000;
+      color: #30F00A;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    .indicator {
+      display: inline-block;
+      margin: 10px 15px;
+      padding: 12px 30px;
+      border: 2px solid #30F00A;
+      border-radius: 25px;
+      opacity: 0.4;
+      font-weight: bold;
+      user-select: none;
+      cursor: pointer;
+      transition: opacity 0.3s, background-color 0.3s, color 0.3s;
+    }
+    .indicator.active {
+      opacity: 1;
+      background-color: #30F00A;
+      color: #000;
+    }
+    iframe {
+      margin-top: 25px;
+      width: 100%;
+      max-width: 400px;
+      height: 120px;
+      border: none;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 <body>
 
-<h2>🎧 Radio12 Player Switch</h2>
+  <h2>🎧 Radio12 Switch Player</h2>
 
-<div>
-  <span id="label-caster" class="indicator active">Caster</span>
-  <span id="label-zeno" class="indicator">Zeno</span>
-</div>
+  <div>
+    <span id="btnCaster" class="indicator active">DanceStation</span>
+    <span id="btnZeno" class="indicator">Dancefloor</span>
+  </div>
 
-<button id="switchBtn">Switch Player</button>
+  <div id="playerContainer" style="margin-top:20px;">
+    <iframe id="casterPlayer" src="https://caster.fm/stations/Radio12DanceStation/player" allow="autoplay"></iframe>
+    <iframe id="zenoPlayer" src="https://zeno.fm/player/s8zqeg20efhvv" allow="autoplay" style="display:none;"></iframe>
+  </div>
 
-<audio id="player" controls autoplay>
-  <source id="audioSource" src="https://stream.caster.fm/yourcasterstream" type="audio/mpeg" />
-  Il tuo browser non supporta l'elemento audio.
-</audio>
+  <script>
+    const btnCaster = document.getElementById('btnCaster');
+    const btnZeno = document.getElementById('btnZeno');
+    const casterPlayer = document.getElementById('casterPlayer');
+    const zenoPlayer = document.getElementById('zenoPlayer');
 
-<script>
-  const casterUrl = "https://stream.caster.fm/yourcasterstream";  // METTI QUI L'URL STREAM CASTER VERO
-  const zenoUrl = "https://stream.zeno.fm/s8zqeg20efhvv";       // URL STREAM ZENO
-
-  const player = document.getElementById('player');
-  const audioSource = document.getElementById('audioSource');
-  const labelCaster = document.getElementById('label-caster');
-  const labelZeno = document.getElementById('label-zeno');
-  const switchBtn = document.getElementById('switchBtn');
-
-  // Stato: true = caster, false = zeno
-  let isCaster = true;
-
-  switchBtn.addEventListener('click', () => {
-    if (isCaster) {
-      // Passa a Zeno
-      audioSource.src = zenoUrl;
-      player.load();
-      player.play();
-      labelCaster.classList.remove('active');
-      labelZeno.classList.add('active');
-      isCaster = false;
-    } else {
-      // Passa a Caster
-      audioSource.src = casterUrl;
-      player.load();
-      player.play();
-      labelZeno.classList.remove('active');
-      labelCaster.classList.add('active');
-      isCaster = true;
+    btnCaster.onclick = () => {
+      if (!btnCaster.classList.contains('active')) {
+        btnCaster.classList.add('active');
+        btnZeno.classList.remove('active');
+        casterPlayer.style.display = "block";
+        casterPlayer.src = casterPlayer.src; // stop Zeno
+        zenoPlayer.style.display = "none";
+      }
     }
-  });
-</script>
+
+    btnZeno.onclick = () => {
+      if (!btnZeno.classList.contains('active')) {
+        btnZeno.classList.add('active');
+        btnCaster.classList.remove('active');
+        zenoPlayer.style.display = "block";
+        zenoPlayer.src = zenoPlayer.src; // stop Caster
+        casterPlayer.style.display = "none";
+      }
+    }
+  </script>
 
 </body>
 </html>
+
 
 
 
